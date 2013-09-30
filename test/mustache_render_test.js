@@ -27,12 +27,12 @@ exports.mustache_render = {
     // setup here if necessary
     done();
   },
-  default_options: function(test) {
+  explicit_paths: function(test) {
     test.expect(1);
 
     var actual = grunt.file.read('tmp/hello_world.html');
     var expected = grunt.file.read('test/expected/hello_world.html');
-    test.equal(actual, expected, 'should render data files using proper templates.');
+    test.equal(actual, expected, 'should render when given explcit paths.');
 
     test.done();
   },

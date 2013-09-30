@@ -30,12 +30,14 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     mustache_render: {
-      default_options: {
+      explicit_paths: {
         options: {
         },
-        files: {
-          'tmp/hello_world.html': ['test/fixtures/hello_world.json'],
-        },
+        files: [
+          {src: ['test/fixtures/hello_world.json',
+                 'test/fixtures/templates/hello_world.html.mustache'],
+           dest: 'tmp/hello_world.html'}
+        ]
       },
     },
 
