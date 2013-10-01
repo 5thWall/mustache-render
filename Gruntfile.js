@@ -34,8 +34,8 @@ module.exports = function(grunt) {
         options: {
         },
         files: [
-          {src: ['test/fixtures/objects/hello_world.json',
-                 'test/fixtures/templates/hello_world.html.mustache'],
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_world.html.mustache',
            dest: 'tmp/hello_world.html'}
         ]
       },
