@@ -30,15 +30,13 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     mustache_render: {
-      explicit_paths: {
-        options: {
-        },
+      json_data: {
         files: [
           {data: 'test/fixtures/objects/hello_world.json',
            template: 'test/fixtures/templates/hello_world.html.mustache',
-           dest: 'tmp/hello_world.html'}
+           dest: 'tmp/hello_json.html'}
         ]
-      },
+      }
     },
 
     // Unit tests.
