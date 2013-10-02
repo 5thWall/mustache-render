@@ -43,7 +43,7 @@ files: [
    dest: "file/to/output.html"}
 ]
 ```
-Each object in the file array represents one rendered template. Data files must be in `JSON` format.
+Each object in the file array represents one rendered template. Data files can be in either `JSON` or `YAML` format.
 
 ### Options
 COMING SOON!

@@ -27,13 +27,24 @@ exports.mustache_render = {
     // setup here if necessary
     done();
   },
-  explicit_paths: function(test) {
+
+  json_data: function(test) {
     test.expect(1);
 
-    var actual = grunt.file.read('tmp/hello_world.html');
+    var actual = grunt.file.read('tmp/hello_json.html');
     var expected = grunt.file.read('test/expected/hello_world.html');
-    test.equal(actual, expected, 'should render when given explcit paths.');
+    test.equal(actual, expected, 'should render when given json data.');
 
     test.done();
   },
+
+  yaml_data: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_yaml.html');
+    var expected = grunt.file.read('test/expected/hello_world.html');
+    test.equal(actual, expected, 'should render when given yaml data.');
+
+    test.done();
+  }
 };
