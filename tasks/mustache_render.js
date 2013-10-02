@@ -8,35 +8,22 @@
 
 'use strict';
 
-var _ = require("lodash");
+// var _ = require('lodash');
+var mustache = require("mustache");
 
 module.exports = function(grunt) {
-  var DEFAULT_OPTIONS = {};
 
-  function filterFiles(files, error, process) {
-    files.forEach(function(filepath) {
-      if (!grunt.file.exists(filepath.src)) {
-        return error(filepath);
-      } else {
-        return process(filepath);
-      }
-    });
+  function compileTemplate(templatePath) {
+    return mustache.compile(grunt.file.read(templatePath));
   }
 
-  function error(filepath) {
-    grunt.log.warn("Source file " + filepath + " not found.");
-    return false;
+  function doMustacheRender(files) {
+    var data = grunt.file.readJSON(files.data);
+    var render = compileTemplate(files.template);
+    grunt.file.write(files.dest,render(data));
   }
 
-  var processFile = _.curry(function(options, filepath) {
-    grunt.log.error("Not ready for file: " + filepath + ".");
+  grunt.registerMultiTask('mustache_render', 'Render mustache templates', function() {
+    this.files.forEach(doMustacheRender);
   });
-
-  function task() {
-    /*jshint validthis: true */
-    var options = this.options(DEFAULT_OPTIONS);
-    filterFiles(this.files, error, processFile(options));
-  }
-
-  grunt.registerMultiTask('mustache_render', 'Render mustache templates', task);
 };
