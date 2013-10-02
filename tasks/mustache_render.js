@@ -8,14 +8,12 @@
 
 'use strict';
 
-// var _ = require('lodash');
+var _ = require('lodash');
 var mustache = require("mustache");
 
 module.exports = function(grunt) {
 
-  function compileTemplate(templatePath) {
-    return mustache.compile(grunt.file.read(templatePath));
-  }
+  var compileTemplate = _.compose(mustache.compile, grunt.file.read);
 
   function doMustacheRender(files) {
     var data = grunt.file.readJSON(files.data);
