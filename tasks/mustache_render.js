@@ -15,8 +15,18 @@ module.exports = function(grunt) {
 
   var compileTemplate = _.compose(mustache.compile, grunt.file.read);
 
+  function getData(dataPath) {
+    if (/\.json/i.test(dataPath)) {
+      return grunt.file.readJSON(dataPath);
+    } else if (/\.yaml/i.test(dataPath)) {
+      return grunt.file.readYAML(dataPath);
+    } else {
+      grunt.log.error("Data file must be JSON or YAML. Given: " + dataPath);
+    }
+  }
+
   function doMustacheRender(files) {
-    var data = grunt.file.readJSON(files.data);
+    var data = getData(files.data);
     var render = compileTemplate(files.template);
     grunt.file.write(files.dest,render(data));
   }
