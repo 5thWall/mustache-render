@@ -75,7 +75,7 @@ And this `json`:
 
 This template:
 
-```html.mustache
+```mustache
 <html>
 <head>
   <meta charset="UTF-8">
