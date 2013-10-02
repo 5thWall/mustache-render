@@ -106,6 +106,10 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+__0.2.0__
+
+ * `YAML` data file support
+
 __0.1.0__
 
-* Initial Release
+ * Initial Release
