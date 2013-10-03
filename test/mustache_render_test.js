@@ -46,5 +46,25 @@ exports.mustache_render = {
     test.equal(actual, expected, 'should render when given yaml data.');
 
     test.done();
+  },
+
+  partials_directory: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_partial.html');
+    var expected = grunt.file.read('test/expected/hello_partial.html');
+    test.equal(actual, expected, 'should find named partials by directory.');
+
+    test.done();
+  },
+
+  partials_extension: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_partial_extension.html');
+    var expected = grunt.file.read('test/expected/hello_altpartial.html');
+    test.equal(actual, expected, 'should find named partials with different extension.');
+
+    test.done();
   }
 };

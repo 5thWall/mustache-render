@@ -43,6 +43,27 @@ module.exports = function(grunt) {
            template: 'test/fixtures/templates/hello_world.html.mustache',
            dest: 'tmp/hello_yaml.html'}
         ]
+      },
+      partials_directory: {
+        options: {
+          partials_directory: 'test/fixtures/partials/'
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial.mustache',
+           dest: 'tmp/hello_partial.html'}
+        ]
+      },
+      partials_extension: {
+        options: {
+          partials_directory: 'test/fixtures/partials/',
+          partials_extension: '.ms'
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial.mustache',
+           dest: 'tmp/hello_partial_extension.html'}
+        ]
       }
     },
 
