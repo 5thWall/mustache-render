@@ -19,17 +19,17 @@ var DEFAULT_OPTIONS = {
 
 module.exports = function(grunt) {
 
-  var compileTemplate = _.compose(mustache.compile, grunt.file.read);
+  var compileTemplate = _.compose(mustache.compile, grunt.file.read),
 
-  var partials = _.curry(function(prefix, extension, name) {
+  partials = _.curry(function(prefix, extension, name) {
     var fileName = path.join(prefix, name + extension);
     if (grunt.file.exists(fileName)) {
       return grunt.file.read(fileName);
     }
     return "";
-  });
+  }),
 
-  function getData(dataPath) {
+  getData = function(dataPath) {
     if (/\.json/i.test(dataPath)) {
       return grunt.file.readJSON(dataPath);
     } else if (/\.yaml/i.test(dataPath)) {
@@ -37,9 +37,9 @@ module.exports = function(grunt) {
     } else {
       grunt.log.error("Data file must be JSON or YAML. Given: " + dataPath);
     }
-  }
+  },
 
-  var doMustacheRender = _.curry(function(options, files) {
+  doMustacheRender = _.curry(function(options, files) {
     var data = getData(files.data),
       render = compileTemplate(files.template),
       getPartial = partials(options.partials_directory,
