@@ -51,5 +51,7 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('mustache_render', 'Render mustache templates', function() {
     var options = this.options(DEFAULT_OPTIONS);
     this.files.forEach(doMustacheRender(options));
+
+    mustache.clearCache(); // Clear out cache at end of job.
   });
 };
