@@ -117,6 +117,10 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+__0.2.1__
+
+ * Bugfix: dependencies
+
 __0.2.0__
 
  * `YAML` data file support
