@@ -13,15 +13,16 @@ var mustache = require("mustache");
 var path = require('path');
 
 var DEFAULT_OPTIONS = {
-  partials_directory : ""
+  partials_directory : "",
+  partials_extension : ".mustache"
 };
 
 module.exports = function(grunt) {
 
   var compileTemplate = _.compose(mustache.compile, grunt.file.read);
 
-  var partials = _.curry(function(prefix, name) {
-    var fileName = path.join(prefix, name + ".mustache");
+  var partials = _.curry(function(prefix, extension, name) {
+    var fileName = path.join(prefix, name + extension);
     if (grunt.file.exists(fileName)) {
       return grunt.file.read(fileName);
     }
@@ -41,7 +42,8 @@ module.exports = function(grunt) {
   var doMustacheRender = _.curry(function(options, files) {
     var data = getData(files.data),
       render = compileTemplate(files.template),
-      getPartial = partials(options.partials_directory);
+      getPartial = partials(options.partials_directory,
+        options.partials_extension);
 
     grunt.file.write(files.dest, render(data, getPartial));
   });
