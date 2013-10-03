@@ -52,7 +52,7 @@ exports.mustache_render = {
     test.expect(1);
 
     var actual = grunt.file.read('tmp/hello_partial.html');
-    var expected = grunt.file.read('test/expected/hello_world.html');
+    var expected = grunt.file.read('test/expected/hello_partial.html');
     test.equal(actual, expected, 'should find named partials by directory.');
 
     test.done();
@@ -62,7 +62,7 @@ exports.mustache_render = {
     test.expect(1);
 
     var actual = grunt.file.read('tmp/hello_partial_extension.html');
-    var expected = grunt.file.read('test/expected/hello_world.html');
+    var expected = grunt.file.read('test/expected/hello_altpartial.html');
     test.equal(actual, expected, 'should find named partials with different extension.');
 
     test.done();
