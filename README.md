@@ -46,7 +46,18 @@ files: [
 Each object in the file array represents one rendered template. Data files can be in either `JSON` or `YAML` format.
 
 ### Options
-COMING SOON!
+
+#### options.partials_directory
+Type: `String`
+Default value: `undefined`
+
+A folder path where partials can be found.
+
+#### options.partials_extension
+Type: `String`
+Default value: `.mustache`
+
+The extension used by partials.
 
 ### Usage Examples
 
