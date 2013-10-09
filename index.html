@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Mustache-render by 5thWall</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Mustache-render</h1>
+          <h2>Grunt plugin for testing mustache templates</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/5thWall/mustache-render/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/5thWall/mustache-render/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/5thWall/mustache-render" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="grunt-mustache-render" class="anchor" href="#grunt-mustache-render"><span class="octicon octicon-link"></span></a>grunt-mustache-render</h1>
+
+<blockquote>
+<p>Render mustache templates</p>
+</blockquote>
+
+<h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<p>This plugin requires Grunt <code>~0.4.1</code></p>
+
+<p>If you haven't used <a href="http://gruntjs.com/">Grunt</a> before, be sure to check out the <a href="http://gruntjs.com/getting-started">Getting Started</a> guide, as it explains how to create a <a href="http://gruntjs.com/sample-gruntfile">Gruntfile</a> as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:</p>
+
+<pre lang="shell"><code>npm install grunt-mustache-render --save-dev
+</code></pre>
+
+<p>Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-mustache-render'</span><span class="p">);</span>
+</pre></div>
+
+<h2>
+<a name="the-mustache_render-task" class="anchor" href="#the-mustache_render-task"><span class="octicon octicon-link"></span></a>The "mustache_render" task</h2>
+
+<h3>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h3>
+
+<p>In your project's Gruntfile, add a section named <code>mustache_render</code> to the data object passed into <code>grunt.initConfig()</code>.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+  <span class="nx">mustache_render</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+      <span class="c1">// Task-specific options go here.</span>
+    <span class="p">},</span>
+    <span class="nx">your_target</span><span class="o">:</span> <span class="p">{</span>
+      <span class="c1">// Target-specific file lists and/or options go here.</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">})</span>
+</pre></div>
+
+<p>File lists must be in the following format:</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">files</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">{</span><span class="nx">data</span><span class="o">:</span> <span class="s2">"path/to/data/file.json"</span><span class="p">,</span>
+   <span class="nx">template</span><span class="o">:</span> <span class="s2">"path/to/template.mustache"</span><span class="p">,</span>
+   <span class="nx">dest</span><span class="o">:</span> <span class="s2">"file/to/output.html"</span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+
+<p>Each object in the file array represents one rendered template. Data files can be in either <code>JSON</code> or <code>YAML</code> format.</p>
+
+<h3>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
+
+<h4>
+<a name="optionsdirectory" class="anchor" href="#optionsdirectory"><span class="octicon octicon-link"></span></a>options.directory</h4>
+
+<p>Type: <code>String</code>
+Default value: <code>""</code></p>
+
+<p>A folder path where partials can be found.</p>
+
+<h4>
+<a name="optionsextension" class="anchor" href="#optionsextension"><span class="octicon octicon-link"></span></a>options.extension</h4>
+
+<p>Type: <code>String</code>
+Default value: <code>".mustache"</code></p>
+
+<p>The extension used by partials.</p>
+
+<h3>
+<a name="usage-examples" class="anchor" href="#usage-examples"><span class="octicon octicon-link"></span></a>Usage Examples</h3>
+
+<p>For this Grunt config:</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+  <span class="nx">mustache_render</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">files</span><span class="o">:</span> <span class="p">[{</span>
+      <span class="nx">data</span><span class="o">:</span> <span class="s2">"data/hello_world.json"</span><span class="p">,</span>
+      <span class="nx">template</span><span class="o">:</span> <span class="s2">"templates/hello_world.mustache"</span><span class="p">,</span>
+      <span class="nx">dest</span><span class="o">:</span> <span class="s2">"public/hello_world.html"</span>
+    <span class="p">}],</span>
+  <span class="p">},</span>
+<span class="p">})</span>
+</pre></div>
+
+<p>And this <code>json</code>:</p>
+
+<div class="highlight highlight-js"><pre><span class="p">{</span>
+  <span class="s2">"greeting"</span> <span class="o">:</span> <span class="s2">"Hello"</span><span class="p">,</span>
+  <span class="s2">"target"</span> <span class="o">:</span> <span class="s2">"World"</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>This template:</p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;</span>A greeting<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;h1&gt;</span>{{greeting}}, {{target}}!<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+<p>Will produce this output:</p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;</span>A greeting<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;h1&gt;</span>Hello, World!<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
+
+<h2>
+<a name="release-history" class="anchor" href="#release-history"><span class="octicon octicon-link"></span></a>Release History</h2>
+
+<p><strong>0.3.0</strong></p>
+
+<ul>
+<li>Unverbosify options</li>
+</ul><p><strong>0.2.1</strong></p>
+
+<ul>
+<li>Bugfix: dependencies</li>
+</ul><p><strong>0.2.0</strong></p>
+
+<ul>
+<li>
+<code>YAML</code> data file support</li>
+</ul><p><strong>0.1.0</strong></p>
+
+<ul>
+<li>Initial Release</li>
+</ul>
+        </section>
+
+        <footer>
+          Mustache-render is maintained by <a href="https://github.com/5thWall">5thWall</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
