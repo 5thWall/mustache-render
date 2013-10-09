@@ -47,15 +47,15 @@ Each object in the file array represents one rendered template. Data files can b
 
 ### Options
 
-#### options.partials_directory
+#### options.directory
 Type: `String`
-Default value: `undefined`
+Default value: `""`
 
 A folder path where partials can be found.
 
-#### options.partials_extension
+#### options.extension
 Type: `String`
-Default value: `.mustache`
+Default value: `".mustache"`
 
 The extension used by partials.
 
@@ -116,6 +116,10 @@ Will produce this output:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+__0.3.0__
+
+ * Unverbosify options
 
 __0.2.1__
 
