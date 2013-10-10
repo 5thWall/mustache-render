@@ -59,6 +59,12 @@ Default value: `".mustache"`
 
 The extension used by partials.
 
+#### options.prefix
+Type: `String`
+Default value: `""`
+
+A common prefix for all partials. So given the prefix: `part_` for a partial named `hello` it will search for a file named `part_hello.mustache`.
+
 ### Usage Examples
 
 For this Grunt config:
