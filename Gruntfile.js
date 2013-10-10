@@ -64,6 +64,17 @@ module.exports = function(grunt) {
            template: 'test/fixtures/templates/hello_partial.mustache',
            dest: 'tmp/hello_partial_extension.html'}
         ]
+      },
+      partials_prefix: {
+        options: {
+          directory: 'test/fixtures/partials/',
+          prefix: 'pre_'
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial.mustache',
+           dest: 'tmp/hello_partial_prefix.html'}
+        ]
       }
     },
 
