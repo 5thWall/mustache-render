@@ -69,6 +69,8 @@ A common prefix for all partials. So given the prefix: `part_` for a partial nam
 Type: `Boolean`  
 Default value: `false`
 
+Clears the mustache cache before running the task. Usefull if `options.extension`, `options.directory`, or `options.prefix` have been changed between tasks.
+
 ### Usage Examples
 
 For this Grunt config:
