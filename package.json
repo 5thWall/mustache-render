@@ -1,7 +1,7 @@
 {
   "name": "grunt-mustache-render",
   "description": "Render mustache templates",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "http://blog.the5thwall.net/mustache-render",
   "author": {
     "name": "Andy Arminio",

@@ -1,4 +1,4 @@
-# grunt-mustache-render v1.0.0
+# grunt-mustache-render v1.1.0
 
 > Render mustache templates
 
@@ -128,6 +128,11 @@ Will produce this output:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+__1.1.0__
+
+ * Option for common prefix on partials
+ * Option to clear mustache cache before running task
 
 __1.0.0__
 
