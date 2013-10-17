@@ -15,7 +15,8 @@ var path = require('path');
 var DEFAULT_OPTIONS = {
   directory : "",
   extension : ".mustache",
-  prefix : ""
+  prefix : "",
+  clear_cache : false
 };
 
 module.exports = function(grunt) {
@@ -50,8 +51,9 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('mustache_render', 'Render mustache templates', function() {
     var options = this.options(DEFAULT_OPTIONS);
-    this.files.forEach(doMustacheRender(options));
 
-    mustache.clearCache(); // Clear out cache at end of job.
+    if (options.clear_cache) { mustache.clearCache(); }
+
+    this.files.forEach(doMustacheRender(options));
   });
 };

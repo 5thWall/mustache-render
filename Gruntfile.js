@@ -57,7 +57,8 @@ module.exports = function(grunt) {
       partials_extension: {
         options: {
           directory: 'test/fixtures/partials/',
-          extension: '.ms'
+          extension: '.ms',
+          clear_cache: true
         },
         files: [
           {data: 'test/fixtures/objects/hello_world.json',
@@ -68,7 +69,8 @@ module.exports = function(grunt) {
       partials_prefix: {
         options: {
           directory: 'test/fixtures/partials/',
-          prefix: 'pre_'
+          prefix: 'pre_',
+          clear_cache: true
         },
         files: [
           {data: 'test/fixtures/objects/hello_world.json',
