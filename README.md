@@ -48,22 +48,26 @@ Each object in the file array represents one rendered template. Data files can b
 ### Options
 
 #### options.directory
-Type: `String`
+Type: `String`  
 Default value: `""`
 
 A folder path where partials can be found.
 
 #### options.extension
-Type: `String`
+Type: `String`  
 Default value: `".mustache"`
 
 The extension used by partials.
 
 #### options.prefix
-Type: `String`
+Type: `String`  
 Default value: `""`
 
 A common prefix for all partials. So given the prefix: `part_` for a partial named `hello` it will search for a file named `part_hello.mustache`.
+
+#### options.clear_cache
+Type: `Boolean`  
+Default value: `false`
 
 ### Usage Examples
 
