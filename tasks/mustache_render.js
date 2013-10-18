@@ -8,20 +8,19 @@
 
 'use strict';
 
-var _ = require('lodash');
-var mustache = require("mustache");
-var path = require('path');
-
-var DEFAULT_OPTIONS = {
-  directory : "",
-  extension : ".mustache",
-  prefix : "",
-  clear_cache : false
-};
-
 module.exports = function(grunt) {
+  var _ = require('lodash'),
+  mustache = require("mustache"),
+  path = require('path'),
 
-  var compileTemplate = _.compose(mustache.compile, grunt.file.read),
+  DEFAULT_OPTIONS = {
+    directory : "",
+    extension : ".mustache",
+    prefix : "",
+    clear_cache : false
+  },
+
+  compileTemplate = _.compose(mustache.compile, grunt.file.read),
 
   partials = _.curry(function(dir, prefix, extension, name) {
     var fileName = path.join(dir, prefix + name + extension);
