@@ -36,7 +36,7 @@ module.exports = function(grunt) {
     } else if (/\.yaml/i.test(dataPath)) {
       return grunt.file.readYAML(dataPath);
     } else {
-      grunt.log.error("Data file must be JSON or YAML. Given: " + dataPath);
+      return dataPath;
     }
   },
 

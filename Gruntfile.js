@@ -44,6 +44,13 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_yaml.html'}
         ]
       },
+      arbitrary_data: {
+        files: [
+          {data: { greeting: "Hello", target: "world" },
+           template: 'test/fixtures/templates/hello_world.html.mustache',
+           dest: 'tmp/hello_arbitrary.html'}
+        ]
+      },
       partials_directory: {
         options: {
           directory: 'test/fixtures/partials/'
