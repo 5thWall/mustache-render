@@ -1,5 +1,7 @@
 # grunt-mustache-render v1.2.0
 
+[![Build Status](https://travis-ci.org/5thWall/mustache-render.png?branch=master)](https://travis-ci.org/5thWall/mustache-render)
+
 > Render mustache templates
 
 ## Getting Started
