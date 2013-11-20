@@ -33,7 +33,10 @@ module.exports = function(grunt) {
   getData = function(data) {
     var datatype = typeof data
 
-    if (datatype == "string") {
+    if (datatype == "undefined" || data == null) {
+      grunt.fail.fatal("Data can not be undefined or null.");
+      return {};
+    } else if (datatype == "string") {
       return getDataFromFile(data);
     } else if (datatype == "object") {
       return data;
