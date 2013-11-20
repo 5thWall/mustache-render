@@ -43,7 +43,15 @@ files: [
    dest: "file/to/output.html"}
 ]
 ```
-Each object in the file array represents one rendered template. Data files can be in either `JSON` or `YAML` format.
+Each object in the file array represents one rendered template. Data files can be in either `JSON` or `YAML` format. Data can also be passed in as an arbitrary JavaScritp object.
+
+```js
+files: [
+  {data: { greeting: "Hello", target: "world" },
+   template: "path/to/template.mustache",
+   dest: "file/to/output.html"}
+]
+```
 
 ### Options
 
@@ -128,6 +136,10 @@ Will produce this output:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+__1.2.0__
+
+ * Allow arbitrary JavaScript objects to be passed as data
 
 __1.1.0__
 
