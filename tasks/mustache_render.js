@@ -35,7 +35,6 @@ module.exports = function(grunt) {
 
     if (datatype == "undefined" || data == null) {
       grunt.fail.fatal("Data can not be undefined or null.");
-      return {};
     } else if (datatype == "string") {
       return getDataFromFile(data);
     } else if (datatype != "object") {
