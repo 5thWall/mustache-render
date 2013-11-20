@@ -3,4 +3,6 @@ node_js:
   - "0.11"
   - "0.10"
   - "0.8"
-install: npm install -g grunt-cli
+install:
+  - npm install -g grunt-cli
+  - npm install
