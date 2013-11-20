@@ -38,11 +38,10 @@ module.exports = function(grunt) {
       return {};
     } else if (datatype == "string") {
       return getDataFromFile(data);
-    } else if (datatype == "object") {
-      return data;
+    } else if (datatype != "object") {
+      grunt.log.warn("Recieved data of type '" + datatype +
+        "'. Expected 'object' or 'string'. Use at your own risk!");
     }
-
-    grunt.log.warn("Recieved data of type '" + datatype + "'. Expected 'object' or 'string'. Use at your own risk!");
 
     return data;
   },
