@@ -30,14 +30,24 @@ module.exports = function(grunt) {
     return "";
   }),
 
-  getData = function(dataPath) {
+  getData = function(data) {
+    var datatype = typeof data
+
+    if (datatype == "string") {
+      return getDataFromFile(data);
+    }
+
+    return data;
+  },
+
+  getDataFromFile = function(dataPath) {
     if (/\.json/i.test(dataPath)) {
       return grunt.file.readJSON(dataPath);
     } else if (/\.yaml/i.test(dataPath)) {
       return grunt.file.readYAML(dataPath);
-    } else {
-      return dataPath;
     }
+
+    grunt.fail.warn("Data file must be JSON or YAML. Given: " + dataPath);
   },
 
   doMustacheRender = _.curry(function(options, files) {

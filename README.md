@@ -137,7 +137,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
-__1.2.0__
+__1.2.1__
 
  * Allow arbitrary JavaScript objects to be passed as data
 
