@@ -35,7 +35,11 @@ module.exports = function(grunt) {
 
     if (datatype == "string") {
       return getDataFromFile(data);
+    } else if (datatype == "object") {
+      return data;
     }
+
+    grunt.log.warn("Recieved data of type '" + datatype + "'. Expected 'object' or 'string'. Use at your own risk!");
 
     return data;
   },
