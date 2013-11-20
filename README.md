@@ -1,4 +1,4 @@
-# grunt-mustache-render v1.1.0
+# grunt-mustache-render v1.2.0
 
 > Render mustache templates
 
