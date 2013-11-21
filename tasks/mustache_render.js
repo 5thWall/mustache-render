@@ -21,15 +21,13 @@ module.exports = function gruntTask(grunt) {
 
   function GMR(options) {
     this.options = options(DEFAULT_OPTIONS);
-
-    grunt.log.writeln(this.options);
   }
 
   GMR.prototype.render = function render(data, template, dest) {
     var renderFn = this._compileTemplate(template);
     data = this._getData(data);
 
-    grunt.file.write(dest, renderFn(data, this._getPartial));
+    grunt.file.write(dest, renderFn(data, this._getPartial.bind(this)));
   };
 
   GMR.prototype._getData = function getData(data) {
@@ -63,7 +61,7 @@ module.exports = function gruntTask(grunt) {
 
   GMR.prototype._getPartial = function getPartial(name) {
     var fileName = this.options.prefix + name + this.options.extension;
-    var filePath = path.join(this.options.dir, fileName);
+    var filePath = path.join(this.options.directory, fileName);
 
     if (grunt.file.exists(filePath)) {
       return grunt.file.read(filePath);
@@ -76,7 +74,7 @@ module.exports = function gruntTask(grunt) {
     function registerTask() {
       var renderer = new GMR(this.options);
 
-      if (this.options.clear_cache) { mustache.clearCache(); }
+      if (renderer.options.clear_cache) { mustache.clearCache(); }
 
       this.files.forEach(function renderFile(fileData) {
         renderer.render(fileData.data, fileData.template, fileData.dest);
