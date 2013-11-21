@@ -1,4 +1,4 @@
-# grunt-mustache-render v1.2.1
+# grunt-mustache-render v1.2.2
 
 [![Build Status](https://travis-ci.org/5thWall/mustache-render.png?branch=master)](https://travis-ci.org/5thWall/mustache-render)
 [![NPM version](https://badge.fury.io/js/grunt-mustache-render.png)](http://badge.fury.io/js/grunt-mustache-render)
@@ -59,25 +59,25 @@ files: [
 ### Options
 
 #### options.directory
-Type: `String`  
+Type: `String`
 Default value: `""`
 
 A folder path where partials can be found.
 
 #### options.extension
-Type: `String`  
+Type: `String`
 Default value: `".mustache"`
 
 The extension used by partials.
 
 #### options.prefix
-Type: `String`  
+Type: `String`
 Default value: `""`
 
 A common prefix for all partials. So given the prefix: `part_` for a partial named `hello` it will search for a file named `part_hello.mustache`.
 
 #### options.clear_cache
-Type: `Boolean`  
+Type: `Boolean`
 Default value: `false`
 
 Clears the mustache cache before running the task. Usefull if `options.extension`, `options.directory`, or `options.prefix` have been changed between tasks.
@@ -139,6 +139,15 @@ Will produce this output:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+__1.2.2__
+
+ * Major code refactor
+ * Remove `lodash` dependency
+
+__1.2.1__
+
+ * Code Cleanup
 
 __1.2.0__
 

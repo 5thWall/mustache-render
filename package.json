@@ -1,7 +1,7 @@
 {
   "name": "grunt-mustache-render",
   "description": "Render mustache templates",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "homepage": "http://blog.the5thwall.net/mustache-render",
   "author": {
     "name": "Andy Arminio",
@@ -37,8 +37,7 @@
     "grunt": "~0.4.1"
   },
   "dependencies": {
-    "mustache": "~0.7.2",
-    "lodash": "~2.2.0"
+    "mustache": "~0.7.2"
   },
   "keywords": [
     "gruntplugin",
