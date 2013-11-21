@@ -9,8 +9,7 @@
 'use strict';
 
 module.exports = function gruntTask(grunt) {
-  var _ = require('lodash'),
-  mustache = require("mustache"),
+  var mustache = require("mustache"),
   path = require('path'),
 
   DEFAULT_OPTIONS = {
@@ -18,42 +17,37 @@ module.exports = function gruntTask(grunt) {
     extension : ".mustache",
     prefix : "",
     clear_cache : false
-  },
+  };
 
-  compileTemplate = _.compose(mustache.compile, grunt.file.read),
+  function GMR(options) {
+    this.options = options(DEFAULT_OPTIONS);
 
-  partials = _.curry(function getPartial(dir, prefix, extension, name) {
-    var fileName = path.join(dir, prefix + name + extension);
-    if (grunt.file.exists(fileName)) {
-      return grunt.file.read(fileName);
-    }
-    return "";
-  }),
+    grunt.log.writeln(this.options);
+  }
 
-  doMustacheRender = _.curry(function doMustacheRender(options, files) {
-    var data = getData(files.data),
-      render = compileTemplate(files.template),
-      getPartial = partials(options.directory, options.prefix, options.extension);
+  GMR.prototype.render = function render(data, template, dest) {
+    var renderFn = this._compileTemplate(template);
+    data = this._getData(data);
 
-    grunt.file.write(files.dest, render(data, getPartial));
-  });
+    grunt.file.write(dest, renderFn(data, this._getPartial));
+  };
 
-  function getData(data) {
+  GMR.prototype._getData = function getData(data) {
     var datatype = typeof data;
 
     if (datatype === "undefined" || data == null) {
       grunt.fail.fatal("Data can not be undefined or null.");
     } else if (datatype === "string") {
-      return getDataFromFile(data);
+      return this._getDataFromFile(data);
     } else if (datatype !== "object") {
       grunt.log.warn("Recieved data of type '" + datatype +
         "'. Expected 'object' or 'string'. Use at your own risk!");
     }
 
     return data;
-  }
+  };
 
-  function getDataFromFile(dataPath) {
+  GMR.prototype._getDataFromFile = function getDataFromFile(dataPath) {
     if (/\.json/i.test(dataPath)) {
       return grunt.file.readJSON(dataPath);
     } else if (/\.yaml/i.test(dataPath)) {
@@ -61,14 +55,31 @@ module.exports = function gruntTask(grunt) {
     }
 
     grunt.fail.warn("Data file must be JSON or YAML. Given: " + dataPath);
-  }
+  };
+
+  GMR.prototype._compileTemplate = function compileTemplate(file) {
+    return mustache.compile(grunt.file.read(file));
+  };
+
+  GMR.prototype._getPartial = function getPartial(name) {
+    var fileName = this.options.prefix + name + this.options.extension;
+    var filePath = path.join(this.options.dir, fileName);
+
+    if (grunt.file.exists(filePath)) {
+      return grunt.file.read(filePath);
+    }
+
+    return "";
+  };
 
   grunt.registerMultiTask('mustache_render', 'Render mustache templates',
     function registerTask() {
-    var options = this.options(DEFAULT_OPTIONS);
+      var renderer = new GMR(this.options);
 
-    if (options.clear_cache) { mustache.clearCache(); }
+      if (this.options.clear_cache) { mustache.clearCache(); }
 
-    this.files.forEach(doMustacheRender(options));
+      this.files.forEach(function renderFile(fileData) {
+        renderer.render(fileData.data, fileData.template, fileData.dest);
+      });
   });
 };
