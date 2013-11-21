@@ -31,13 +31,13 @@ module.exports = function(grunt) {
   }),
 
   getData = function(data) {
-    var datatype = typeof data
+    var datatype = typeof data;
 
-    if (datatype == "undefined" || data == null) {
+    if (datatype === "undefined" || data == null) {
       grunt.fail.fatal("Data can not be undefined or null.");
-    } else if (datatype == "string") {
+    } else if (datatype === "string") {
       return getDataFromFile(data);
-    } else if (datatype != "object") {
+    } else if (datatype !== "object") {
       grunt.log.warn("Recieved data of type '" + datatype +
         "'. Expected 'object' or 'string'. Use at your own risk!");
     }
