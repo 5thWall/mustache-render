@@ -8,7 +8,7 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function gruntTask(grunt) {
   var _ = require('lodash'),
   mustache = require("mustache"),
   path = require('path'),
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 
   compileTemplate = _.compose(mustache.compile, grunt.file.read),
 
-  partials = _.curry(function(dir, prefix, extension, name) {
+  partials = _.curry(function getPartial(dir, prefix, extension, name) {
     var fileName = path.join(dir, prefix + name + extension);
     if (grunt.file.exists(fileName)) {
       return grunt.file.read(fileName);
@@ -30,7 +30,15 @@ module.exports = function(grunt) {
     return "";
   }),
 
-  getData = function(data) {
+  doMustacheRender = _.curry(function doMustacheRender(options, files) {
+    var data = getData(files.data),
+      render = compileTemplate(files.template),
+      getPartial = partials(options.directory, options.prefix, options.extension);
+
+    grunt.file.write(files.dest, render(data, getPartial));
+  });
+
+  function getData(data) {
     var datatype = typeof data;
 
     if (datatype === "undefined" || data == null) {
@@ -43,9 +51,9 @@ module.exports = function(grunt) {
     }
 
     return data;
-  },
+  }
 
-  getDataFromFile = function(dataPath) {
+  function getDataFromFile(dataPath) {
     if (/\.json/i.test(dataPath)) {
       return grunt.file.readJSON(dataPath);
     } else if (/\.yaml/i.test(dataPath)) {
@@ -53,17 +61,10 @@ module.exports = function(grunt) {
     }
 
     grunt.fail.warn("Data file must be JSON or YAML. Given: " + dataPath);
-  },
+  }
 
-  doMustacheRender = _.curry(function(options, files) {
-    var data = getData(files.data),
-      render = compileTemplate(files.template),
-      getPartial = partials(options.directory, options.prefix, options.extension);
-
-    grunt.file.write(files.dest, render(data, getPartial));
-  });
-
-  grunt.registerMultiTask('mustache_render', 'Render mustache templates', function() {
+  grunt.registerMultiTask('mustache_render', 'Render mustache templates',
+    function registerTask() {
     var options = this.options(DEFAULT_OPTIONS);
 
     if (options.clear_cache) { mustache.clearCache(); }
