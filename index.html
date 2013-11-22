@@ -29,7 +29,7 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a name="grunt-mustache-render-v121" class="anchor" href="#grunt-mustache-render-v121"><span class="octicon octicon-link"></span></a>grunt-mustache-render v1.2.1</h1>
+<a name="grunt-mustache-render-v122" class="anchor" href="#grunt-mustache-render-v122"><span class="octicon octicon-link"></span></a>grunt-mustache-render v1.2.2</h1>
 
 <p><a href="https://travis-ci.org/5thWall/mustache-render"><img src="https://travis-ci.org/5thWall/mustache-render.png?branch=master" alt="Build Status"></a>
 <a href="http://badge.fury.io/js/grunt-mustache-render"><img src="https://badge.fury.io/js/grunt-mustache-render.png" alt="NPM version"></a></p>
@@ -64,16 +64,28 @@
 <div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
   <span class="nx">mustache_render</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-      <span class="c1">// Task-specific options go here.</span>
+      <span class="c1">// Task global options go here</span>
     <span class="p">},</span>
     <span class="nx">your_target</span><span class="o">:</span> <span class="p">{</span>
-      <span class="c1">// Target-specific file lists and/or options go here.</span>
+      <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+        <span class="c1">// Target specific options go here</span>
+      <span class="p">},</span>
+      <span class="nx">files</span> <span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nx">data</span><span class="o">:</span> <span class="c1">// Path to JSON or YAML file, or POJO</span>
+          <span class="nx">template</span><span class="o">:</span> <span class="c1">// Path to template file</span>
+          <span class="nx">dest</span><span class="o">:</span> <span class="c1">// Path to output destination here</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
     <span class="p">},</span>
   <span class="p">},</span>
 <span class="p">})</span>
 </pre></div>
 
-<p>File lists must be in the following format:</p>
+<p><strong>Note:</strong> The <code>files</code> parameter <em>must</em> be an array, and <em>must</em> conform to the format specified above. Each object in the file array represents <em>one</em> rendered template. Data files can be in either <code>JSON</code> or <code>YAML</code> format or as a POJO (Plain Ol' JavaScript Object).</p>
+
+<h4>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples:</h4>
 
 <div class="highlight highlight-js"><pre><span class="nx">files</span><span class="o">:</span> <span class="p">[</span>
   <span class="p">{</span><span class="nx">data</span><span class="o">:</span> <span class="s2">"path/to/data/file.json"</span><span class="p">,</span>
@@ -81,8 +93,6 @@
    <span class="nx">dest</span><span class="o">:</span> <span class="s2">"file/to/output.html"</span><span class="p">}</span>
 <span class="p">]</span>
 </pre></div>
-
-<p>Each object in the file array represents one rendered template. Data files can be in either <code>JSON</code> or <code>YAML</code> format. Data can also be passed in as an arbitrary JavaScritp object.</p>
 
 <div class="highlight highlight-js"><pre><span class="nx">files</span><span class="o">:</span> <span class="p">[</span>
   <span class="p">{</span><span class="nx">data</span><span class="o">:</span> <span class="p">{</span> <span class="nx">greeting</span><span class="o">:</span> <span class="s2">"Hello"</span><span class="p">,</span> <span class="nx">target</span><span class="o">:</span> <span class="s2">"world"</span> <span class="p">},</span>
@@ -97,34 +107,34 @@
 <h4>
 <a name="optionsdirectory" class="anchor" href="#optionsdirectory"><span class="octicon octicon-link"></span></a>options.directory</h4>
 
-<p>Type: <code>String</code><br>
+<p>Type: <code>String</code>
 Default value: <code>""</code></p>
 
-<p>A folder path where partials can be found.</p>
+<p>Path to the directory in which partials can be found. Partials are looked up by name in this directory.</p>
 
 <h4>
 <a name="optionsextension" class="anchor" href="#optionsextension"><span class="octicon octicon-link"></span></a>options.extension</h4>
 
-<p>Type: <code>String</code><br>
+<p>Type: <code>String</code>
 Default value: <code>".mustache"</code></p>
 
-<p>The extension used by partials.</p>
+<p><code>mustache-render</code> will use this extension when looking up partials.</p>
 
 <h4>
 <a name="optionsprefix" class="anchor" href="#optionsprefix"><span class="octicon octicon-link"></span></a>options.prefix</h4>
 
-<p>Type: <code>String</code><br>
+<p>Type: <code>String</code>
 Default value: <code>""</code></p>
 
-<p>A common prefix for all partials. So given the prefix: <code>part_</code> for a partial named <code>hello</code> it will search for a file named <code>part_hello.mustache</code>.</p>
+<p><code>mustache-render</code> will use this as a common prefix when looking up partials. So given the prefix: <code>part_</code> for a partial named <code>hello</code> it will search for a file named <code>part_hello.mustache</code>.</p>
 
 <h4>
 <a name="optionsclear_cache" class="anchor" href="#optionsclear_cache"><span class="octicon octicon-link"></span></a>options.clear_cache</h4>
 
-<p>Type: <code>Boolean</code><br>
+<p>Type: <code>Boolean</code>
 Default value: <code>false</code></p>
 
-<p>Clears the mustache cache before running the task. Usefull if <code>options.extension</code>, <code>options.directory</code>, or <code>options.prefix</code> have been changed between tasks.</p>
+<p>Clears the mustache cache before running the target. Mustache will cache partials by name when running multiple tasks, so this option is usefull if <code>options.extension</code>, <code>options.directory</code>, or <code>options.prefix</code> have been changed between tasks.</p>
 
 <h3>
 <a name="usage-examples" class="anchor" href="#usage-examples"><span class="octicon octicon-link"></span></a>Usage Examples</h3>
@@ -133,12 +143,14 @@ Default value: <code>false</code></p>
 
 <div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
   <span class="nx">mustache_render</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">files</span><span class="o">:</span> <span class="p">[{</span>
-      <span class="nx">data</span><span class="o">:</span> <span class="s2">"data/hello_world.json"</span><span class="p">,</span>
-      <span class="nx">template</span><span class="o">:</span> <span class="s2">"templates/hello_world.mustache"</span><span class="p">,</span>
-      <span class="nx">dest</span><span class="o">:</span> <span class="s2">"public/hello_world.html"</span>
-    <span class="p">}],</span>
-  <span class="p">},</span>
+    <span class="nx">all</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">files</span><span class="o">:</span> <span class="p">[{</span>
+        <span class="nx">data</span><span class="o">:</span> <span class="s2">"data/hello_world.json"</span><span class="p">,</span>
+        <span class="nx">template</span><span class="o">:</span> <span class="s2">"templates/hello_world.mustache"</span><span class="p">,</span>
+        <span class="nx">dest</span><span class="o">:</span> <span class="s2">"public/hello_world.html"</span>
+      <span class="p">}]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
 <span class="p">})</span>
 </pre></div>
 
@@ -184,7 +196,16 @@ Default value: <code>false</code></p>
 <h2>
 <a name="release-history" class="anchor" href="#release-history"><span class="octicon octicon-link"></span></a>Release History</h2>
 
-<p><strong>1.2.0</strong></p>
+<p><strong>1.2.2</strong></p>
+
+<ul>
+<li>Major code refactor</li>
+<li>Remove <code>lodash</code> dependency</li>
+</ul><p><strong>1.2.1</strong></p>
+
+<ul>
+<li>Code Cleanup</li>
+</ul><p><strong>1.2.0</strong></p>
 
 <ul>
 <li>Allow arbitrary JavaScript objects to be passed as data</li>
