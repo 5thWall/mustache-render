@@ -29,15 +29,26 @@ In your project's Gruntfile, add a section named `mustache_render` to the data o
 grunt.initConfig({
   mustache_render: {
     options: {
-      // Task-specific options go here.
+      // Task global options go here
     },
     your_target: {
-      // Target-specific file lists and/or options go here.
+      options: {
+        // Target specific options go here
+      },
+      files : [
+        {
+          data: // Path to JSON or YAML file, or POJO
+          template: // Path to template file
+          dest: // Path to output destination here
+        }
+      ]
     },
   },
 })
 ```
-File lists must be in the following format:
+**Note:** The `files` parameter _must_ be an array, and _must_ conform to the format specified above. Each object in the file array represents _one_ rendered template. Data files can be in either `JSON` or `YAML` format or as a POJO (Plain Ol' JavaScript Object).
+
+#### Examples:
 
 ```js
 files: [
@@ -46,7 +57,6 @@ files: [
    dest: "file/to/output.html"}
 ]
 ```
-Each object in the file array represents one rendered template. Data files can be in either `JSON` or `YAML` format. Data can also be passed in as an arbitrary JavaScritp object.
 
 ```js
 files: [
@@ -62,25 +72,25 @@ files: [
 Type: `String`
 Default value: `""`
 
-A folder path where partials can be found.
+Path to the directory in which partials can be found. Partials are looked up by name in this directory.
 
 #### options.extension
 Type: `String`
 Default value: `".mustache"`
 
-The extension used by partials.
+`mustache-render` will use this extension when looking up partials.
 
 #### options.prefix
 Type: `String`
 Default value: `""`
 
-A common prefix for all partials. So given the prefix: `part_` for a partial named `hello` it will search for a file named `part_hello.mustache`.
+`mustache-render` will use this as a common prefix when looking up partials. So given the prefix: `part_` for a partial named `hello` it will search for a file named `part_hello.mustache`.
 
 #### options.clear_cache
 Type: `Boolean`
 Default value: `false`
 
-Clears the mustache cache before running the task. Usefull if `options.extension`, `options.directory`, or `options.prefix` have been changed between tasks.
+Clears the mustache cache before running the target. Mustache will cache partials by name when running multiple tasks, so this option is usefull if `options.extension`, `options.directory`, or `options.prefix` have been changed between tasks.
 
 ### Usage Examples
 
@@ -89,12 +99,14 @@ For this Grunt config:
 ```js
 grunt.initConfig({
   mustache_render: {
-    files: [{
-      data: "data/hello_world.json",
-      template: "templates/hello_world.mustache",
-      dest: "public/hello_world.html"
-    }],
-  },
+    all: {
+      files: [{
+        data: "data/hello_world.json",
+        template: "templates/hello_world.mustache",
+        dest: "public/hello_world.html"
+      }]
+    }
+  }
 })
 ```
 
