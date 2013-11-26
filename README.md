@@ -69,25 +69,25 @@ files: [
 ### Options
 
 #### options.directory
-Type: `String`
+Type: `String`  
 Default value: `""`
 
 Path to the directory in which partials can be found. Partials are looked up by name in this directory.
 
 #### options.extension
-Type: `String`
+Type: `String`  
 Default value: `".mustache"`
 
 `mustache-render` will use this extension when looking up partials.
 
 #### options.prefix
-Type: `String`
+Type: `String`  
 Default value: `""`
 
 `mustache-render` will use this as a common prefix when looking up partials. So given the prefix: `part_` for a partial named `hello` it will search for a file named `part_hello.mustache`.
 
 #### options.clear_cache
-Type: `Boolean`
+Type: `Boolean`  
 Default value: `false`
 
 Clears the mustache cache before running the target. Mustache will cache partials by name when running multiple tasks, so this option is usefull if `options.extension`, `options.directory`, or `options.prefix` have been changed between tasks.
