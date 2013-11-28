@@ -44,6 +44,13 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_yaml.html'}
         ]
       },
+      yml_data: {
+        files: [
+          {data: 'test/fixtures/objects/hello_world.yml',
+           template: 'test/fixtures/templates/hello_world.html.mustache',
+           dest: 'tmp/hello_yml.html'}
+        ]
+      },
       arbitrary_data: {
         files: [
           {data: { greeting: "Hello", target: "world" },

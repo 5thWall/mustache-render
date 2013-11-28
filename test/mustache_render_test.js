@@ -48,6 +48,16 @@ exports.mustache_render = {
     test.done();
   },
 
+  yml_data: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_yml.html');
+    var expected = grunt.file.read('test/expected/hello_world.html');
+    test.equal(actual, expected, 'should render when given yml data.');
+
+    test.done();
+  },
+
   arbitrary_data: function(test) {
     test.expect(1);
 

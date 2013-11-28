@@ -1,4 +1,4 @@
-# grunt-mustache-render v1.2.2
+# grunt-mustache-render v1.2.3
 
 [![Build Status](https://travis-ci.org/5thWall/mustache-render.png?branch=master)](https://travis-ci.org/5thWall/mustache-render)
 [![NPM version](https://badge.fury.io/js/grunt-mustache-render.png)](http://badge.fury.io/js/grunt-mustache-render)
@@ -151,6 +151,10 @@ Will produce this output:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+__1.2.3__
+
+ * Accept `YAML` files with either `.yaml` or `.yml` extensions.
 
 __1.2.2__
 

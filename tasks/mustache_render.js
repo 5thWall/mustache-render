@@ -48,7 +48,7 @@ module.exports = function gruntTask(grunt) {
   GMR.prototype._getDataFromFile = function getDataFromFile(dataPath) {
     if (/\.json/i.test(dataPath)) {
       return grunt.file.readJSON(dataPath);
-    } else if (/\.yaml/i.test(dataPath)) {
+    } else if (/\.ya?ml/i.test(dataPath)) {
       return grunt.file.readYAML(dataPath);
     }
 
