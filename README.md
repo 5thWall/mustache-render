@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/5thWall/mustache-render.png?branch=master)](https://travis-ci.org/5thWall/mustache-render)
 [![NPM version](https://badge.fury.io/js/grunt-mustache-render.png)](http://badge.fury.io/js/grunt-mustache-render)
 
-> Render mustache templates
+This is a grunt plugin to render [mustache](http://mustache.github.io/) templates. It takes data in `JSON`, `YAML`, or `POJO` (Plain Ol' JavaScript Object) format. It allows you to specify a folder for partials, instead of needing to list them individually.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
