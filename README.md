@@ -46,7 +46,7 @@ grunt.initConfig({
   },
 })
 ```
-**Note:** The `files` parameter _must_ be an array, and _must_ conform to the format specified above. Each object in the file array represents _one_ rendered template. Data files can be in either `JSON` or `YAML` format or as a POJO (Plain Ol' JavaScript Object).
+**Note:** The `files` parameter _must_ be an array, and _must_ conform to the format specified above. Each object in the file array represents _one_ rendered template. Data files can be in either `JSON` or `YAML` format or as a `POJO` (Plain Ol' JavaScript Object).
 
 #### Examples:
 
