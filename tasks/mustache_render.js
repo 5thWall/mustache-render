@@ -1,4 +1,4 @@
-/*
+/**
  * grunt-mustache-render
  * https://github.com/5thWall/mustache-render
  *
@@ -19,22 +19,26 @@ module.exports = function gruntTask(grunt) {
     clear_cache : false
   };
 
-  // Public: Create Object for rendering templates
-  //
-  // options - The Object options used to configure the renderer
-  //   directory - The String base directory to look for partials (default: "")
-  //   extension - The String extension for partials templates (default: ".mustache")
-  //   prefix    - The String common prefix for partials (default: "")
+  /**
+   * Public: Create Object for rendering templates
+   *
+   * options - The Object options used to configure the renderer
+   *   directory - The String base directory to look for partials (default: "")
+   *   extension - The String extension for partials templates (default: ".mustache")
+   *   prefix    - The String common prefix for partials (default: "")
+   */
   function GMR(options) {
     this.options = options(DEFAULT_OPTIONS);
   }
 
-  // Public: Render a template with the given data to the given destination
-  //
-  // template - The String path to the template to be rendered
-  // data     - The String path to a JSON or YAML file
-  //            The data Object
-  // dest     - The String path to write the rendered template
+  /**
+   * Public: Render a template with the given data to the given destination
+   *
+   * template - The String path to the template to be rendered
+   * data     - The String path to a JSON or YAML file
+   *            The data Object
+   * dest     - The String path to write the rendered template
+   */
   GMR.prototype.render = function render(data, template, dest) {
     var renderFn = this._compileTemplate(template);
     data = this._getData(data);
