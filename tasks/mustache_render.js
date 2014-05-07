@@ -16,7 +16,8 @@ module.exports = function gruntTask(grunt) {
     directory : "",
     extension : ".mustache",
     prefix : "",
-    clear_cache : false
+    clear_cache : false,
+    escape: true
   };
 
   /**
@@ -95,6 +96,10 @@ module.exports = function gruntTask(grunt) {
       var renderer = new GMR(this.options);
 
       if (renderer.options.clear_cache) { mustache.clearCache(); }
+
+      if (!renderer.options.escape) { 
+        mustache.escape = function (text) { return text; }
+      }
 
       this.files.forEach(function renderFile(fileData) {
         renderer.render(fileData.data, fileData.template, fileData.dest);

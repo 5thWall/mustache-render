@@ -92,6 +92,12 @@ Default value: `false`
 
 Clears the mustache cache before running the target. Mustache will cache partials by name when running multiple tasks, so this option is usefull if `options.extension`, `options.directory`, or `options.prefix` have been changed between tasks.
 
+### options.escape
+Type: `Boolean`  
+Default value: `true`
+
+If set to `false` it disables default HTML escaping. That means that `{{var}}` will not be escaped. This is usefull for templating files that are not HTML.
+
 ### Usage Examples
 
 For this Grunt config:
