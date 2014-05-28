@@ -97,5 +97,15 @@ exports.mustache_render = {
     test.equal(actual, expected, 'should find partials with given prefix.');
 
     test.done();
+  },
+
+  partials_function: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_partial_function.html');
+    var expected = grunt.file.read('test/expected/hello_partial_function.html');
+    test.equal(actual, expected, 'should use given function to find partials');
+
+    test.done();
   }
 };

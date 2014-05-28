@@ -1,4 +1,4 @@
-# grunt-mustache-render v1.2.3
+# grunt-mustache-render v1.3.0
 
 [![Build Status](https://travis-ci.org/5thWall/mustache-render.png?branch=master)](https://travis-ci.org/5thWall/mustache-render)
 [![NPM version](https://badge.fury.io/js/grunt-mustache-render.png)](http://badge.fury.io/js/grunt-mustache-render)
@@ -92,6 +92,18 @@ Default value: `false`
 
 Clears the mustache cache before running the target. Mustache will cache partials by name when running multiple tasks, so this option is usefull if `options.extension`, `options.directory`, or `options.prefix` have been changed between tasks.
 
+#### options.partial_finder
+Type: `Function`  
+Default value: `null`
+
+Overrides the default function for finding partials. The function will be passed the name of the partial as a parameter, and must return the text of the partial.
+
+```js
+partial_finder: function(name) {
+  return "Hello, I am a partial with name: " + name + "\n";
+}
+```
+
 ### Usage Examples
 
 For this Grunt config:
@@ -151,6 +163,10 @@ Will produce this output:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+__1.3.0__
+
+ * Add ability for users to define their own partial finder functions.
 
 __1.2.3__
 
