@@ -22,10 +22,10 @@ module.exports = function gruntTask(grunt) {
   /**
    * Public: Create Object for rendering templates
    *
-   * options - The Object options used to configure the renderer
-   *   directory - The String base directory to look for partials (default: "")
-   *   extension - The String extension for partials templates (default: ".mustache")
-   *   prefix    - The String common prefix for partials (default: "")
+   * options   - The Object options used to configure the renderer
+   * directory - The String base directory to look for partials (default: "")
+   * extension - The String extension for partials templates (default: ".mustache")
+   * prefix    - The String common prefix for partials (default: "")
    */
   function GMR(options) {
     this.options = options(DEFAULT_OPTIONS);
