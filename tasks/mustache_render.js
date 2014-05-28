@@ -78,7 +78,7 @@ module.exports = function gruntTask(grunt) {
     return mustache.compile(grunt.file.read(file));
   };
 
-  // Internal: Retrieve String partial by name.
+  // Internal: Delegate to user provided function if present
   GMR.prototype._getPartial = function getPartial(name) {
     if(this.options.partial_finder) {
       return this.options.partial_finder(name);
@@ -87,6 +87,7 @@ module.exports = function gruntTask(grunt) {
     return this._defaultGetPartial(name);
   };
 
+  // Internal: Retrieve String partial by name.
   GMR.prototype._defaultGetPartial = function defaultGetPartial(name) {
     var fileName = this.options.prefix + name + this.options.extension;
     var filePath = path.join(this.options.directory, fileName);
