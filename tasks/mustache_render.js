@@ -80,6 +80,14 @@ module.exports = function gruntTask(grunt) {
 
   // Internal: Retrieve String partial by name.
   GMR.prototype._getPartial = function getPartial(name) {
+    if(this.options.partial_finder) {
+      return this.options.partial_finder(name);
+    }
+
+    return this._defaultGetPartial(name);
+  };
+
+  GMR.prototype._defaultGetPartial = function defaultGetPartial(name) {
     var fileName = this.options.prefix + name + this.options.extension;
     var filePath = path.join(this.options.directory, fileName);
 

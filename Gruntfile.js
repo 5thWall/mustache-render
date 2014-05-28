@@ -91,6 +91,20 @@ module.exports = function(grunt) {
            template: 'test/fixtures/templates/hello_partial.mustache',
            dest: 'tmp/hello_partial_prefix.html'}
         ]
+      },
+
+      partials_function: {
+        options: {
+          partial_finder: function(name) {
+            return "Hello, I'm from a partial function with name: " + name + "\n";
+          },
+          clear_cache: true
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial.mustache',
+           dest: 'tmp/hello_partial_function.html'}
+        ]
       }
     },
 
