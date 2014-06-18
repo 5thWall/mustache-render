@@ -107,6 +107,8 @@ module.exports = function gruntTask(grunt) {
 
       this.files.forEach(function renderFile(fileData) {
         renderer.render(fileData.data, fileData.template, fileData.dest);
+        grunt.log.writeln("Wrote " + fileData.dest.cyan + " using " +
+          (Object.keys(fileData.data).length + " variables").green);
       });
   });
 };
