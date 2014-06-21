@@ -1,4 +1,4 @@
-# grunt-mustache-render v1.3.0
+# grunt-mustache-render v1.4.0
 
 [![Build Status](https://travis-ci.org/5thWall/mustache-render.png?branch=master)](https://travis-ci.org/5thWall/mustache-render)
 [![NPM version](https://badge.fury.io/js/grunt-mustache-render.png)](http://badge.fury.io/js/grunt-mustache-render)
@@ -163,6 +163,10 @@ Will produce this output:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+__1.4.0__
+
+ * Output progress of task to console
 
 __1.3.0__
 
