@@ -48,7 +48,7 @@ module.exports = function gruntTask(grunt) {
    */
   GMR.prototype.render = function render(data, template, dest) {
     return new Promise(function renderPromise(resolve, reject) {
-      Promise.all([this._getData(data), this._compileTemplate(template)]).
+      Promise.all([this._getData(data), this._getRenderFn(template)]).
 
       then(function gotDataAndRenderFn(results) {
         var dataObj = results[0], renderFn = results[1];
@@ -108,6 +108,24 @@ module.exports = function gruntTask(grunt) {
     }
 
     throw new Error("Data file must be JSON or YAML. Given: " + dataPath);
+  };
+
+  // Internal: Ensure template is in proper format and retrieve render function.
+  GMR.prototype._getRenderFn = function getRenderFn(template) {
+    return new Promise(function getRenderFnPromise(resolve, reject) {
+      if (typeof template !== 'string') {
+        reject(new Error("Template path or URL must be given as a string"));
+      } else if (/^https?:/.test(template)) {
+        resolve(this._getRenderFnFromUrl(template));
+      } else {
+        resolve(this._compileTemplate(template));
+      }
+    }.bind(this));
+  };
+
+  // Internal: Get rendering function from remote URL.
+  GMR.prototype._getRenderFnFromUrl = function getRenderFnFromUrl(dataUrl) {
+    throw new Error("Remote template lookups are not implemented yet.");
   };
 
   // Internal: Compile template to render function.
