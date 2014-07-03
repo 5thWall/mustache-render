@@ -84,7 +84,7 @@ module.exports = function gruntTask(grunt) {
     return new Promise(function getDataPromise(resolve, reject) {
       if (data === undefined || data === null) {
         reject(new Error("Data must be defined and not null"));
-      } else if (typeof data !== 'string') {
+      } else if (typeof data !== 'string' || data === '') {
         resolve(data);
       } else if (/^https?:/.test(data)) {
         resolve(this._getDataFromUrl(data));
@@ -113,7 +113,7 @@ module.exports = function gruntTask(grunt) {
   // Internal: Ensure template is in proper format and retrieve render function.
   GMR.prototype._getRenderFn = function getRenderFn(template) {
     return new Promise(function getRenderFnPromise(resolve, reject) {
-      if (typeof template !== 'string') {
+      if (typeof template !== 'string' || template === '') {
         reject(new Error("Template path or URL must be given as a string"));
       } else if (/^https?:/.test(template)) {
         resolve(this._getRenderFnFromUrl(template));
