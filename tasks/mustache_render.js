@@ -56,7 +56,7 @@ module.exports = function gruntTask(grunt) {
         grunt.file.write(dest, renderFn(dataObj, this._getPartial.bind(this)));
 
         grunt.log.writeln("Output " + dest + ":");
-        grunt.log.oklns(
+        grunt.log.ok(
           (
             typeof dataObj === 'object' ?
             (Object.keys(dataObj).length + " variables").green :
@@ -167,17 +167,25 @@ module.exports = function gruntTask(grunt) {
 
       then(function allFulfilled() {
         grunt.log.writeln();
-        grunt.log.oklns("Files successfully written: " + this.files.length);
+        grunt.log.ok("Files successfully written: " + this.files.length);
+
         done();
       }.bind(this)).
 
       catch(function someRejected(exception) {
-        if (exception && typeof exception.stack === 'string') {
-          exception.stack.
-            split('\n').
-            filter(Boolean).
-            forEach(function logErrorLine(line) { grunt.log.error(line); });
+        if (exception) {
+          grunt.verbose.or.error(exception.toString());
+
+          if (typeof exception.stack === 'string') {
+            exception.stack.
+              split('\n').
+              filter(Boolean).
+              forEach(function logError(line) { grunt.verbose.error(line); });
+          } else {
+            grunt.verbose.error(exception.toString() + " (no stack trace)");
+          }
         }
+
         done(false);
       });
   });
