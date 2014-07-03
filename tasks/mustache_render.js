@@ -11,6 +11,7 @@
 module.exports = function gruntTask(grunt) {
   var mustache = require("mustache"),
   path = require('path'),
+  Promise = require('es6-promise').Promise,
 
   DEFAULT_OPTIONS = {
     directory : "",
@@ -38,12 +39,28 @@ module.exports = function gruntTask(grunt) {
    * data     - The String path to a JSON or YAML file
    *            The data Object
    * dest     - The String path to write the rendered template
+   *
+   * Returns a Promise to be fulfilled once rendering completes, or rejected if
+   * any error occurs while trying to render given the parameters.
    */
   GMR.prototype.render = function render(data, template, dest) {
-    var renderFn = this._compileTemplate(template);
-    data = this._getData(data);
+    return new Promise(function renderPromise(resolve, reject) {
+      var renderFn = this._compileTemplate(template);
+      data = this._getData(data);
 
-    grunt.file.write(dest, renderFn(data, this._getPartial.bind(this)));
+      grunt.file.write(dest, renderFn(data, this._getPartial.bind(this)));
+
+      grunt.log.writeln(
+        "Wrote " + dest.cyan + " using " +
+        (
+          typeof data === 'object' ?
+          Object.keys(data).length + " variables" :
+          "external data"
+        ).green
+      );
+
+      resolve();
+    }.bind(this));
   };
 
   // Internal: Ensure data is the proper format.
@@ -101,21 +118,28 @@ module.exports = function gruntTask(grunt) {
 
   grunt.registerMultiTask('mustache_render', 'Render mustache templates',
     function registerTask() {
+      var done = this.async();
       var renderer = new GMR(this.options);
 
       if (renderer.options.clear_cache) { mustache.clearCache(); }
 
-      this.files.forEach(function renderFile(fileData) {
-        renderer.render(fileData.data, fileData.template, fileData.dest);
+      Promise.all(this.files.map(function renderFile(fileData) {
+        return renderer.render(fileData.data, fileData.template, fileData.dest);
+      })).
 
-        grunt.log.writeln(
-          "Wrote " + fileData.dest.cyan + " using " +
-          (
-            typeof fileData.data === 'object' ?
-            Object.keys(fileData.data).length + " variables" :
-            "external data"
-          ).green
-        );
+      then(function allFulfilled() {
+        grunt.log.oklns(this.files.length + " successfully processed.");
+        done();
+      }.bind(this)).
+
+      catch(function someRejected(exception) {
+        if (exception && typeof exception.stack === 'string') {
+          exception.stack.
+            split('\n').
+            filter(Boolean).
+            forEach(function logErrorLine(line) { grunt.log.error(line); });
+        }
+        done(false);
       });
   });
 };

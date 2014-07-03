@@ -37,6 +37,7 @@
     "grunt": "~0.4.1"
   },
   "dependencies": {
+    "es6-promise": "~1.0.0",
     "mustache": "~0.7.2"
   },
   "keywords": [
