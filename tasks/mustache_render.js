@@ -13,6 +13,7 @@ module.exports = function gruntTask(grunt) {
   path = require('path'),
   Promise = require('es6-promise').Promise,
   request = require('request'),
+  yaml = require('js-yaml'),
 
   DEFAULT_OPTIONS = {
     directory : "",
@@ -60,7 +61,7 @@ module.exports = function gruntTask(grunt) {
         grunt.log.ok(
           (
             typeof dataObj === 'object' ?
-            (Object.keys(dataObj).length + " variables").green :
+            (Object.keys(dataObj).length + "-key object").green :
             "non-object data".yellow
           ) +
           " into " + template.cyan +
@@ -97,8 +98,44 @@ module.exports = function gruntTask(grunt) {
 
   // Internal: Read JSON or YAML from a remote URL.
   GMR.prototype._getDataFromUrl = function getDataFromUrl(dataUrl) {
-    throw new Error("Remote data lookups are not implemented yet.");
+    var promises = this._getDataFromUrl.promiseCache;
+
+    if (promises[dataUrl] === undefined) {
+      promises[dataUrl] = new Promise(function gdfuCache(resolve, reject) {
+        request(dataUrl, function gdfuDownloaded(error, response, body) {
+          var code = response && response.statusCode;
+          var mime = (
+            response && response.headers &&
+            typeof response.headers['content-type'] === 'string' &&
+            response.headers['content-type']
+          ) || '';
+
+          if (error) {
+            reject(error);
+          } else if (code !== 200) {
+            reject(new Error("Got status " + code + " downloading data"));
+          } else if (typeof body !== 'string' || body === '') {
+            reject(new Error("Got empty body while downloading data"));
+          } else if (
+            dataUrl.substr(-5) === '.json' || dataUrl.substr(-3) === '.js' ||
+            mime.indexOf('json') !== -1 || mime.indexOf('javascript') !== -1
+          ) {
+            resolve(JSON.parse(body));
+          } else if (
+            dataUrl.substr(-5) === '.yaml' || dataUrl.substr(-4) === '.yml' ||
+            mime.indexOf('yaml') !== -1 || mime.indexOf('yml') !== -1
+          ) {
+            resolve(yaml.load(body));  // uses same parsing method as Grunt
+          } else {
+            reject(new Error("The data URL does not look like JSON or YAML"));
+          }
+        });
+      });
+    }
+
+    return promises[dataUrl];
   };
+  GMR.prototype._getDataFromUrl.promiseCache = {};
 
   // Internal: Read JSON or YAML data from file.
   GMR.prototype._getDataFromFile = function getDataFromFile(dataPath) {
@@ -131,11 +168,12 @@ module.exports = function gruntTask(grunt) {
     if (promises[templateUrl] === undefined) {
       promises[templateUrl] = new Promise(function grffuCache(resolve, reject) {
         request(templateUrl, function grffuDownloaded(error, response, body) {
+          var code = response && response.statusCode;
+
           if (error) {
             reject(error);
-          } else if (response.statusCode !== 200) {
-            reject(new Error("Got status " + response.statusCode + "while " +
-              " downloading template"));
+          } else if (code !== 200) {
+            reject(new Error("Got status " + code + " downloading template"));
           } else if (typeof body !== 'string' || body === '') {
             reject(new Error("Got empty body while downloading template"));
           } else {
