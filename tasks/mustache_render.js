@@ -45,21 +45,31 @@ module.exports = function gruntTask(grunt) {
    */
   GMR.prototype.render = function render(data, template, dest) {
     return new Promise(function renderPromise(resolve, reject) {
-      var renderFn = this._compileTemplate(template);
-      data = this._getData(data);
+      Promise.all([this._getData(data), this._compileTemplate(template)]).
 
-      grunt.file.write(dest, renderFn(data, this._getPartial.bind(this)));
+      then(function gotDataAndRenderFn(results) {
+        var dataObj = results[0], renderFn = results[1];
 
-      grunt.log.writeln(
-        "Wrote " + dest.cyan + " using " +
-        (
-          typeof data === 'object' ?
-          Object.keys(data).length + " variables" :
-          "external data"
-        ).green
-      );
+        grunt.file.write(dest, renderFn(dataObj, this._getPartial.bind(this)));
 
-      resolve();
+        grunt.log.writeln("Output " + dest + ":");
+        grunt.log.oklns(
+          (
+            typeof dataObj === 'object' ?
+            (Object.keys(dataObj).length + " variables").green :
+            "non-object data".yellow
+          ) +
+          " into " + template.cyan +
+          " from " + (typeof data === 'string' ? data : "JavaScript code").cyan
+        );
+
+        resolve();
+      }.bind(this)).
+
+      catch(function errorFromDataOrRenderFn(exception) {
+        grunt.log.writeln(dest + "... " + "ERROR".red);
+        reject(exception);
+      });
     }.bind(this));
   };
 
@@ -128,7 +138,8 @@ module.exports = function gruntTask(grunt) {
       })).
 
       then(function allFulfilled() {
-        grunt.log.oklns(this.files.length + " successfully processed.");
+        grunt.log.writeln();
+        grunt.log.oklns("Files successfully written: " + this.files.length);
         done();
       }.bind(this)).
 
