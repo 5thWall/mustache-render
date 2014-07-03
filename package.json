@@ -38,7 +38,8 @@
   },
   "dependencies": {
     "es6-promise": "~1.0.0",
-    "mustache": "~0.7.2"
+    "mustache": "~0.7.2",
+    "request": "2.36.0"
   },
   "keywords": [
     "gruntplugin",

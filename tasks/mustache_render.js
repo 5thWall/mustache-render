@@ -12,6 +12,7 @@ module.exports = function gruntTask(grunt) {
   var mustache = require("mustache"),
   path = require('path'),
   Promise = require('es6-promise').Promise,
+  request = require('request'),
 
   DEFAULT_OPTIONS = {
     directory : "",
@@ -124,9 +125,29 @@ module.exports = function gruntTask(grunt) {
   };
 
   // Internal: Get rendering function from remote URL.
-  GMR.prototype._getRenderFnFromUrl = function getRenderFnFromUrl(dataUrl) {
-    throw new Error("Remote template lookups are not implemented yet.");
+  GMR.prototype._getRenderFnFromUrl = function getRenderFnFromUrl(templateUrl) {
+    var promises = this._getRenderFnFromUrl.promiseCache;
+
+    if (promises[templateUrl] === undefined) {
+      promises[templateUrl] = new Promise(function grffuCache(resolve, reject) {
+        request(templateUrl, function grffuDownloaded(error, response, body) {
+          if (error) {
+            reject(error);
+          } else if (response.statusCode !== 200) {
+            reject(new Error("Got status " + response.statusCode + "while " +
+              " downloading template"));
+          } else if (typeof body !== 'string' || body === '') {
+            reject(new Error("Got empty body while downloading template"));
+          } else {
+            resolve(mustache.compile(body));
+          }
+        });
+      });
+    }
+
+    return promises[templateUrl];
   };
+  GMR.prototype._getRenderFnFromUrl.promiseCache = {};
 
   // Internal: Compile template to render function.
   GMR.prototype._compileTemplate = function compileTemplate(file) {
