@@ -102,7 +102,12 @@ module.exports = function gruntTask(grunt) {
 
     if (promises[dataUrl] === undefined) {
       grunt.log.writeln("Fetching data from " + dataUrl + "...");
-      promises[dataUrl] = new Promise(function gdfuCache(resolve, reject) {
+      promises[dataUrl] = new Promise(function gdfuCache(resolve, _rej) {
+        var reject = function gdfuReject(error) {
+            error.url = dataUrl;
+            _rej(error);
+        };
+
         request(dataUrl, function gdfuDownloaded(error, response, body) {
           var code = response && response.statusCode;
           var mime = (
@@ -168,7 +173,12 @@ module.exports = function gruntTask(grunt) {
 
     if (promises[templateUrl] === undefined) {
       grunt.log.writeln("Fetching template from " + templateUrl + "...");
-      promises[templateUrl] = new Promise(function grffuCache(resolve, reject) {
+      promises[templateUrl] = new Promise(function grffuCache(resolve, _rej) {
+        var reject = function grffuReject(error) {
+            error.url = templateUrl;
+            _rej(error);
+        };
+
         request(templateUrl, function grffuDownloaded(error, response, body) {
           var code = response && response.statusCode;
 
@@ -235,15 +245,15 @@ module.exports = function gruntTask(grunt) {
 
       catch(function someRejected(exception) {
         if (exception) {
-          grunt.verbose.or.error(exception.toString());
+          grunt.log.error(exception.toString() +
+            (exception.url ? " for " + exception.url : ""));
 
           if (typeof exception.stack === 'string') {
             exception.stack.
               split('\n').
               filter(Boolean).
+              slice(1).
               forEach(function logError(line) { grunt.verbose.error(line); });
-          } else {
-            grunt.verbose.error(exception.toString() + " (no stack trace)");
           }
         }
 
