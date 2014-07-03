@@ -42,6 +42,9 @@ module.exports = function gruntTask(grunt) {
    *
    * Returns a Promise to be fulfilled once rendering completes, or rejected if
    * any error occurs while trying to render given the parameters.
+   *
+   * If the resolved data yields something that isn't an object, "non-object
+   * data" will be displayed to the user in yellow as a warning.
    */
   GMR.prototype.render = function render(data, template, dest) {
     return new Promise(function renderPromise(resolve, reject) {
@@ -74,19 +77,26 @@ module.exports = function gruntTask(grunt) {
   };
 
   // Internal: Ensure data is the proper format.
+  // The check that was previously here to make sure the user ends up with an
+  // object for their data has been moved to render() as there are other ways a
+  // non-object could sneak in (e.g. reading odd "JSON" from a file or URL).
   GMR.prototype._getData = function getData(data) {
-    var datatype = typeof data;
+    return new Promise(function getDataPromise(resolve, reject) {
+      if (data === undefined || data === null) {
+        reject(new Error("Data must be defined and not null"));
+      } else if (typeof data !== 'string') {
+        resolve(data);
+      } else if (/^https?:/.test(data)) {
+        resolve(this._getDataFromUrl(data));
+      } else {
+        resolve(this._getDataFromFile(data));
+      }
+    }.bind(this));
+  };
 
-    if (datatype === "undefined" || data == null) {
-      grunt.fail.fatal("Data can not be undefined or null.");
-    } else if (datatype === "string") {
-      return this._getDataFromFile(data);
-    } else if (datatype !== "object") {
-      grunt.log.warn("Recieved data of type '" + datatype +
-        "'. Expected 'object' or 'string'. Use at your own risk!");
-    }
-
-    return data;
+  // Internal: Read JSON or YAML from a remote URL.
+  GMR.prototype._getDataFromUrl = function getDataFromUrl(dataUrl) {
+    throw new Error("Remote data lookups are not implemented yet.");
   };
 
   // Internal: Read JSON or YAML data from file.
@@ -97,7 +107,7 @@ module.exports = function gruntTask(grunt) {
       return grunt.file.readYAML(dataPath);
     }
 
-    grunt.fail.warn("Data file must be JSON or YAML. Given: " + dataPath);
+    throw new Error("Data file must be JSON or YAML. Given: " + dataPath);
   };
 
   // Internal: Compile template to render function.
