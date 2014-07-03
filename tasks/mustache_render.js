@@ -101,6 +101,7 @@ module.exports = function gruntTask(grunt) {
     var promises = this._getDataFromUrl.promiseCache;
 
     if (promises[dataUrl] === undefined) {
+      grunt.log.writeln("Fetching data from " + dataUrl + "...");
       promises[dataUrl] = new Promise(function gdfuCache(resolve, reject) {
         request(dataUrl, function gdfuDownloaded(error, response, body) {
           var code = response && response.statusCode;
@@ -166,6 +167,7 @@ module.exports = function gruntTask(grunt) {
     var promises = this._getRenderFnFromUrl.promiseCache;
 
     if (promises[templateUrl] === undefined) {
+      grunt.log.writeln("Fetching template from " + templateUrl + "...");
       promises[templateUrl] = new Promise(function grffuCache(resolve, reject) {
         request(templateUrl, function grffuDownloaded(error, response, body) {
           var code = response && response.statusCode;
