@@ -37,8 +37,8 @@ grunt.initConfig({
       },
       files : [
         {
-          data: // Path to JSON or YAML file, or POJO
-          template: // Path to template file
+          data: // Path or URL to JSON or YAML file, or POJO
+          template: // Path or URL to template file
           dest: // Path to output destination here
         }
       ]
@@ -54,6 +54,9 @@ grunt.initConfig({
 files: [
   {data: "path/to/data/file.json",
    template: "path/to/template.mustache",
+   dest: "file/to/output.html"},
+  {data: "http://api.example.com/file.json",
+   template: "http://docs.example.com/report.mustache",
    dest: "file/to/output.html"}
 ]
 ```
@@ -62,6 +65,9 @@ files: [
 files: [
   {data: { greeting: "Hello", target: "world" },
    template: "path/to/template.mustache",
+   dest: "file/to/output.html"},
+  {data: { greeting: "Hola", target: "mundo" },
+   template: "http://docs.example.com/report.mustache",
    dest: "file/to/output.html"}
 ]
 ```

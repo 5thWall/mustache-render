@@ -38,6 +38,16 @@ exports.mustache_render = {
     test.done();
   },
 
+  json_data_url: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_json_url.html');
+    var expected = grunt.file.read('test/expected/hello_world.html');
+    test.equal(actual, expected, 'should render when given json data via web.');
+
+    test.done();
+  },
+
   yaml_data: function(test) {
     test.expect(1);
 
@@ -48,12 +58,32 @@ exports.mustache_render = {
     test.done();
   },
 
+  yaml_data_url: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_yaml_url.html');
+    var expected = grunt.file.read('test/expected/hello_world.html');
+    test.equal(actual, expected, 'should render when given yaml data via web.');
+
+    test.done();
+  },
+
   yml_data: function(test) {
     test.expect(1);
 
     var actual = grunt.file.read('tmp/hello_yml.html');
     var expected = grunt.file.read('test/expected/hello_world.html');
     test.equal(actual, expected, 'should render when given yml data.');
+
+    test.done();
+  },
+
+  yml_data_url: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_yml_url.html');
+    var expected = grunt.file.read('test/expected/hello_world.html');
+    test.equal(actual, expected, 'should render when given yml data via web.');
 
     test.done();
   },

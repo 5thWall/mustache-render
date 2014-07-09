@@ -9,6 +9,7 @@
 'use strict';
 
 module.exports = function(grunt) {
+  var URL_BASE = 'https://raw.githubusercontent.com/5thWall/mustache-render/master/';
 
   // Project configuration.
   grunt.initConfig({
@@ -37,6 +38,13 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_json.html'}
         ]
       },
+      json_data_url: {
+        files: [
+          {data: URL_BASE + 'test/fixtures/objects/hello_world.json',
+           template: URL_BASE + 'test/fixtures/templates/hello_world.html.mustache',
+           dest: 'tmp/hello_json_url.html'}
+        ]
+      },
       yaml_data: {
         files: [
           {data: 'test/fixtures/objects/hello_world.yaml',
@@ -44,11 +52,25 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_yaml.html'}
         ]
       },
+      yaml_data_url: {
+        files: [
+          {data: URL_BASE + 'test/fixtures/objects/hello_world.yaml',
+           template: URL_BASE + 'test/fixtures/templates/hello_world.html.mustache',
+           dest: 'tmp/hello_yaml_url.html'}
+        ]
+      },
       yml_data: {
         files: [
           {data: 'test/fixtures/objects/hello_world.yml',
            template: 'test/fixtures/templates/hello_world.html.mustache',
            dest: 'tmp/hello_yml.html'}
+        ]
+      },
+      yml_data_url: {
+        files: [
+          {data: URL_BASE + 'test/fixtures/objects/hello_world.yml',
+           template: URL_BASE + 'test/fixtures/templates/hello_world.html.mustache',
+           dest: 'tmp/hello_yml_url.html'}
         ]
       },
       arbitrary_data: {
