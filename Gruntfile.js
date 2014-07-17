@@ -127,6 +127,27 @@ module.exports = function(grunt) {
            template: 'test/fixtures/templates/hello_partial.mustache',
            dest: 'tmp/hello_partial_function.html'}
         ]
+      },
+      batch_single_template_multiple_json_via_map: {
+        options: {
+          template: 'test/fixtures/templates/hello_world.html.mustache'
+        },
+        files: {
+          'tmp/batch-a1/de.html': 'test/fixtures/objects/batch-a/de.json',
+          'tmp/batch-a1/es.html': 'test/fixtures/objects/batch-a/es.json',
+          'tmp/batch-a1/pt.html': 'test/fixtures/objects/batch-a/pt.json'
+        }
+      },
+      batch_single_template_multiple_json_via_expand: {
+        files: [
+          {expand: true,
+           flatten: true,
+           src: 'test/fixtures/objects/batch-a/*.json',
+           template: 'test/fixtures/templates/hello_world.html.mustache',
+           dest: 'tmp/batch-a2',
+           ext: '.html',
+           extDot: 'last'}
+        ]
       }
     },
 

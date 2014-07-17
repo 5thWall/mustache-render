@@ -137,5 +137,31 @@ exports.mustache_render = {
     test.equal(actual, expected, 'should use given function to find partials');
 
     test.done();
+  },
+
+  batch_single_template_multiple_json_via_map: function(test) {
+    test.expect(3);
+
+    ['de', 'es', 'pt'].forEach(function(lang) {
+      var actual = grunt.file.read('tmp/batch-a1/' + lang + '.html');
+      var expected = grunt.file.read('test/expected/batch-a/' + lang + '.html');
+      test.equal(actual, expected, 'should correctly process multiple JSON ' +
+        'files into a single template via a map for ' + lang);
+    });
+
+    test.done();
+  },
+
+  batch_single_template_multiple_json_via_expand: function(test) {
+    test.expect(3);
+
+    ['de', 'es', 'pt'].forEach(function(lang) {
+      var actual = grunt.file.read('tmp/batch-a2/' + lang + '.html');
+      var expected = grunt.file.read('test/expected/batch-a/' + lang + '.html');
+      test.equal(actual, expected, 'should correctly process multiple JSON ' +
+        'files into a single template via an expansion for ' + lang);
+    });
+
+    test.done();
   }
 };
