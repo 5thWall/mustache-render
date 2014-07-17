@@ -148,6 +148,28 @@ module.exports = function(grunt) {
            ext: '.html',
            extDot: 'last'}
         ]
+      },
+      batch_multiple_template_single_json_via_map: {
+        options: {
+          data: 'test/fixtures/objects/hello_world.json'
+        },
+        files: {
+            'tmp/batch-b1/markdown.md': 'test/fixtures/templates/batch-b/markdown.md.mustache',
+            'tmp/batch-b1/plain.txt': 'test/fixtures/templates/batch-b/plain.txt.mustache',
+            'tmp/batch-b1/spreadsheet.csv': 'test/fixtures/templates/batch-b/spreadsheet.csv.mustache'
+        }
+      },
+      batch_multiple_template_single_json_via_expand: {
+        files: [
+          {expand: true,
+           flatten: true,
+           src: 'test/fixtures/templates/batch-b/*.mustache',
+           data: 'test/fixtures/objects/hello_world.json',
+           dest: 'tmp/batch-b2',
+           rename: function (dest, filename) {
+               return dest + '/' + filename.replace(/\.mustache$/, '');
+           }}
+        ]
       }
     },
 

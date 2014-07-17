@@ -163,5 +163,31 @@ exports.mustache_render = {
     });
 
     test.done();
-  }
+  },
+
+  batch_multiple_template_single_json_via_map: function(test) {
+    test.expect(3);
+
+    ['markdown.md', 'plain.txt', 'spreadsheet.csv'].forEach(function(filename) {
+      var actual = grunt.file.read('tmp/batch-b1/' + filename);
+      var expected = grunt.file.read('test/expected/batch-b/' + filename);
+      test.equal(actual, expected, 'should correctly process multiple ' +
+        'template files using a single data source via a map for ' + filename);
+    });
+
+    test.done();
+  },
+
+  batch_multiple_template_single_json_via_expand: function(test) {
+    test.expect(3);
+
+    ['markdown.md', 'plain.txt', 'spreadsheet.csv'].forEach(function(filename) {
+      var actual = grunt.file.read('tmp/batch-b2/' + filename);
+      var expected = grunt.file.read('test/expected/batch-b/' + filename);
+      test.equal(actual, expected, 'should correctly process multiple ' +
+        'templates using a single data source via an expansion ' + filename);
+    });
+
+    test.done();
+  },
 };
