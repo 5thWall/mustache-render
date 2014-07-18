@@ -154,9 +154,9 @@ module.exports = function(grunt) {
           data: 'test/fixtures/objects/hello_world.json'
         },
         files: {
-            'tmp/batch-b1/markdown.md': 'test/fixtures/templates/batch-b/markdown.md.mustache',
-            'tmp/batch-b1/plain.txt': 'test/fixtures/templates/batch-b/plain.txt.mustache',
-            'tmp/batch-b1/spreadsheet.csv': 'test/fixtures/templates/batch-b/spreadsheet.csv.mustache'
+          'tmp/batch-b1/markdown.md': 'test/fixtures/templates/batch-b/markdown.md.mustache',
+          'tmp/batch-b1/plain.txt': 'test/fixtures/templates/batch-b/plain.txt.mustache',
+          'tmp/batch-b1/spreadsheet.csv': 'test/fixtures/templates/batch-b/spreadsheet.csv.mustache'
         }
       },
       batch_multiple_template_single_json_via_expand: {
@@ -167,7 +167,7 @@ module.exports = function(grunt) {
            data: 'test/fixtures/objects/hello_world.json',
            dest: 'tmp/batch-b2',
            rename: function (dest, filename) {
-               return dest + '/' + filename.replace(/\.mustache$/, '');
+             return dest + '/' + filename.replace(/\.mustache$/, '');
            }}
         ]
       }

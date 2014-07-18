@@ -151,7 +151,7 @@ partial_finder: function(name) {
 ```
 
 #### options.data and options.template
-Type: anything normally accepted for a file
+Type: anything normally accepted for a file  
 Default value: `undefined`
 
 These two slots can be used to fill in a default `data` or `template` value for any item in your `files` list that does not already have one specified.  This can be handy if you want to dynamically build the `files` list and apply the same `data` or `template` source to every item in the list.
