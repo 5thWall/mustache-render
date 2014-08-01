@@ -1,5 +1,9 @@
 # Changelog
 
+__1.6.0__
+
+ * Add support for dynamically building file list
+
 __1.5.0__
 
  * Allow asynchronous downloading of data and templates over HTTP or HTTPS
