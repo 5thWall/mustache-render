@@ -127,6 +127,49 @@ module.exports = function(grunt) {
            template: 'test/fixtures/templates/hello_partial.mustache',
            dest: 'tmp/hello_partial_function.html'}
         ]
+      },
+      batch_single_template_multiple_json_via_map: {
+        options: {
+          template: 'test/fixtures/templates/hello_world.html.mustache'
+        },
+        files: {
+          'tmp/batch-a1/de.html': 'test/fixtures/objects/batch-a/de.json',
+          'tmp/batch-a1/es.html': 'test/fixtures/objects/batch-a/es.json',
+          'tmp/batch-a1/pt.html': 'test/fixtures/objects/batch-a/pt.json'
+        }
+      },
+      batch_single_template_multiple_json_via_expand: {
+        files: [
+          {expand: true,
+           flatten: true,
+           src: 'test/fixtures/objects/batch-a/*.json',
+           template: 'test/fixtures/templates/hello_world.html.mustache',
+           dest: 'tmp/batch-a2',
+           ext: '.html',
+           extDot: 'last'}
+        ]
+      },
+      batch_multiple_template_single_json_via_map: {
+        options: {
+          data: 'test/fixtures/objects/hello_world.json'
+        },
+        files: {
+          'tmp/batch-b1/markdown.md': 'test/fixtures/templates/batch-b/markdown.md.mustache',
+          'tmp/batch-b1/plain.txt': 'test/fixtures/templates/batch-b/plain.txt.mustache',
+          'tmp/batch-b1/spreadsheet.csv': 'test/fixtures/templates/batch-b/spreadsheet.csv.mustache'
+        }
+      },
+      batch_multiple_template_single_json_via_expand: {
+        files: [
+          {expand: true,
+           flatten: true,
+           src: 'test/fixtures/templates/batch-b/*.mustache',
+           data: 'test/fixtures/objects/hello_world.json',
+           dest: 'tmp/batch-b2',
+           rename: function (dest, filename) {
+             return dest + '/' + filename.replace(/\.mustache$/, '');
+           }}
+        ]
       }
     },
 

@@ -48,6 +48,10 @@ grunt.initConfig({
 ```
 **Note:** The `files` parameter _must_ be an array, and _must_ conform to the format specified above. Each object in the file array represents _one_ rendered template. Data files can be in either `JSON` or `YAML` format or as a `POJO` (Plain Ol' JavaScript Object).
 
+#### Building Long File Lists
+
+If you want to build out a long list for the `files` array, perhaps dynamically as described by [building the files object dynamically](http://gruntjs.com/configuring-tasks#building-the-files-object-dynamically), you may use either `data` *or* `template` as the source (`src`) value as long as you specify the other one by its normal name. See below for some examples.
+
 #### Examples:
 
 ```js
@@ -69,6 +73,42 @@ files: [
   {data: { greeting: "Hola", target: "mundo" },
    template: "http://docs.example.com/report.mustache",
    dest: "file/to/output.html"}
+]
+```
+
+```js
+options: {template: 'common-template.mustache'},
+files: {
+  'file/to/output-1.html': 'data/to/read-1.json',
+  'file/to/output-2.html': 'data/to/read-2.json',
+  'file/to/output-3.html': 'data/to/read-3.json'
+}
+```
+
+```js
+files: [
+  {expand: true,
+   src: 'data/to/read-*.json',
+   template: 'common-template.mustache',
+   dest: 'dest/directory/'}
+]
+```
+
+```js
+options: {data: 'common-data.json'},
+files: {
+  'file/to/output-1.html': 'template/to/read-1.mustache',
+  'file/to/output-2.html': 'template/to/read-2.mustache',
+  'file/to/output-3.html': 'template/to/read-3.mustache'
+}
+```
+
+```js
+files: [
+  {expand: true,
+   src: 'template/to/read-*.mustache',
+   data: 'common-data.json',
+   dest: 'dest/directory/'}
 ]
 ```
 
@@ -109,6 +149,12 @@ partial_finder: function(name) {
   return "Hello, I am a partial with name: " + name + "\n";
 }
 ```
+
+#### options.data and options.template
+Type: anything normally accepted for a file  
+Default value: `undefined`
+
+These two slots can be used to fill in a default `data` or `template` value for any item in your `files` list that does not already have one specified.  This can be handy if you want to dynamically build the `files` list and apply the same `data` or `template` source to every item in the list.
 
 ### Usage Examples
 

@@ -227,18 +227,61 @@ module.exports = function gruntTask(grunt) {
 
   grunt.registerMultiTask('mustache_render', 'Render mustache templates',
     function registerTask() {
+      var options = this.options();
+      var files = this.files.map(function expandFiles(fileData) {
+        var dest = fileData.dest;
+        if (typeof dest !== 'string' || dest === '') {
+          throw new Error("dest must be specified as a string");
+        }
+
+        var data = (fileData.data !== undefined) ? fileData.data :
+          (options.data !== undefined) ? options.data : undefined;
+        var template = fileData.template || options.template;
+
+        if (fileData.src !== undefined) {
+          if (!Array.isArray(fileData.src)) {
+            throw new Error("Encountered incorrect source definition");
+          } else if (fileData.src.length > 1) {
+            throw new Error("Encountered multiple inputs for " + dest + ": " +
+              fileData.src.join(", ") + " (did you enable the expand flag " +
+              "and correctly configure extDot?)");
+          } else if (fileData.src.length === 0) {
+            return false;
+          } else if (data !== undefined) {
+            if (template) {
+              throw new Error("Use either data OR template with source files");
+            } else {
+              return {data: data, template: fileData.src[0], dest: dest};
+            }
+          } else if (template) {
+            return {data: fileData.src[0], template: template, dest: dest};
+          } else {
+            throw new Error("data or template must be used with source files");
+          }
+        } else if (data !== undefined && template) {
+          return fileData;
+        } else {
+          throw new Error("Please specify data and template for each file");
+        }
+      }).filter(Boolean);
+
+      if (files.length < 1) {
+        grunt.log.error("Nothing to do (are sources correctly specified?)");
+        return;
+      }
+
       var done = this.async();
       var renderer = new GMR(this.options);
 
       if (renderer.options.clear_cache) { mustache.clearCache(); }
 
-      Promise.all(this.files.map(function renderFile(fileData) {
+      Promise.all(files.map(function renderFile(fileData) {
         return renderer.render(fileData.data, fileData.template, fileData.dest);
       })).
 
       then(function allFulfilled() {
         grunt.log.writeln();
-        grunt.log.ok("Files successfully written: " + this.files.length);
+        grunt.log.ok("Files successfully written: " + files.length);
 
         done();
       }.bind(this)).
