@@ -119,6 +119,16 @@ exports.mustache_render = {
     test.done();
   },
 
+  partials_directory_full: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_partial_full.html');
+    var expected = grunt.file.read('test/expected/hello_partial.html');
+    test.equal(actual, expected, 'should find named partials by full path.');
+
+    test.done();
+  },
+
   partials_prefix: function(test) {
     test.expect(1);
 

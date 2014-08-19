@@ -102,6 +102,16 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_partial_extension.html'}
         ]
       },
+      partials_full: {
+        options: {
+          clear_cache: true
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial_full.mustache',
+           dest: 'tmp/hello_partial_full.html'}
+        ]
+      },
       partials_prefix: {  // tests backward compatibility w/ 'prefix'
         options: {
           directory: 'test/fixtures/partials/',
