@@ -102,7 +102,7 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_partial_extension.html'}
         ]
       },
-      partials_prefix: {
+      partials_prefix: {  // tests backward compatibility w/ 'prefix'
         options: {
           directory: 'test/fixtures/partials/',
           prefix: 'pre_',
@@ -114,7 +114,18 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_partial_prefix.html'}
         ]
       },
-
+      partials_prefix_dir: {  // tests backward compatibility w/ 'prefix'
+        options: {
+          directory: 'test/fixtures/partials/',
+          prefix: 'sub-',
+          clear_cache: true
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial_dir.mustache',
+           dest: 'tmp/hello_partial_prefix_dir.html'}
+        ]
+      },
       partials_function: {
         options: {
           partial_finder: function(name) {

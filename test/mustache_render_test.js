@@ -124,7 +124,18 @@ exports.mustache_render = {
 
     var actual = grunt.file.read('tmp/hello_partial_prefix.html');
     var expected = grunt.file.read('test/expected/hello_prefix.html');
-    test.equal(actual, expected, 'should find partials with given prefix.');
+    test.equal(actual, expected, 'should find partials w/ old-style prefix.');
+
+    test.done();
+  },
+
+  partials_prefix_dir: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_partial_prefix_dir.html');
+    var expected = grunt.file.read('test/expected/hello_prefix_dir.html');
+    test.equal(actual, expected, 'should find partials w/ old-style prefix ' +
+      'using legacy behavior when combined with a subdirectory');
 
     test.done();
   },
