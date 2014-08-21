@@ -116,7 +116,7 @@ files: [
 
 #### options.directory
 Type: `String`  
-Default value: `""`
+Default value: `"."` (i.e. relative to your `Gruntfile.js`)
 
 Path to the directory in which partials can be found. Partials are looked up by name in this directory.
 

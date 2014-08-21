@@ -16,9 +16,11 @@ module.exports = function gruntTask(grunt) {
   yaml = require('js-yaml'),
 
   DEFAULT_OPTIONS = {
-    directory : "",
+    directory : ".",
     extension : ".mustache",
-    prefix : "",
+    prefix : "",  // discouraged; use directoryPrefix and/or filenamePrefix
+    directoryPrefix : "",
+    filenamePrefix : "",
     clear_cache : false
   };
 
@@ -26,9 +28,12 @@ module.exports = function gruntTask(grunt) {
    * Public: Create Object for rendering templates
    *
    * options   - The Object options used to configure the renderer
-   * directory - The String base directory to look for partials (default: "")
+   * directory - The String base directory to look for partials (default: ".")
    * extension - The String extension for partials templates (default: ".mustache")
-   * prefix    - The String common prefix for partials (default: "")
+   * prefix    - The String prefix for partials (default: ""), whose behavior
+   *             depends on whether a partial reference uses a directory or
+   *             not; new configurations should use the directoryPrefix and/or
+   *             filenamePrefix options instead, which are unambiguous
    */
   function GMR(options) {
     this.options = options(DEFAULT_OPTIONS);
@@ -215,8 +220,32 @@ module.exports = function gruntTask(grunt) {
 
   // Internal: Retrieve String partial by name.
   GMR.prototype._defaultGetPartial = function defaultGetPartial(name) {
-    var fileName = this.options.prefix + name + this.options.extension;
-    var filePath = path.join(this.options.directory, fileName);
+    var dirPrefix = this.options.directoryPrefix;
+    var filePrefix = this.options.filenamePrefix;
+    var oldPrefix = this.options.prefix;
+
+    if ((dirPrefix || filePrefix) && oldPrefix) {
+      throw new Error("old-style prefix option cannot be combined with the " +
+                      "newer directoryPrefix or filenamePrefix options");
+    }
+
+    var dirname = path.dirname(name);
+    var hasDir = dirname && dirname !== '.';
+
+    if (oldPrefix) {
+      if (hasDir) { dirPrefix = oldPrefix; }
+      else { filePrefix = oldPrefix; }
+    }
+
+    if (hasDir && dirPrefix && ['.', '/'].indexOf(dirname[0]) !== -1) {
+      throw new Error("cannot use prefix when using a partial reference " +
+                      "that points outside of the base directory");
+    }
+
+    var basename = path.basename(name);
+    var filePath = path.join(this.options.directory,
+                             hasDir ? dirPrefix + dirname : '.',
+                             filePrefix + basename + this.options.extension);
 
     if (grunt.file.exists(filePath)) {
       return grunt.file.read(filePath);
