@@ -60,9 +60,8 @@ module.exports = function gruntTask(grunt) {
       then(function gotDataAndRenderFn(results) {
         var dataObj = results[0], renderFn = results[1];
 
-        grunt.file.write(dest, renderFn(dataObj, this._getPartial.bind(this)));
-
         grunt.log.writeln("Output " + dest + ":");
+        grunt.file.write(dest, renderFn(dataObj, this._getPartial.bind(this)));
         grunt.log.ok(
           (
             typeof dataObj === 'object' ?
@@ -233,7 +232,12 @@ module.exports = function gruntTask(grunt) {
     var hasDir = dirname && dirname !== '.';
 
     if (oldPrefix) {
-      if (hasDir) { dirPrefix = oldPrefix; }
+      if (hasDir) {
+        dirPrefix = oldPrefix;
+        grunt.log.error("Warning: partial reference " + name.yellow + " w/ " +
+                        "prefix " + oldPrefix.cyan + " will prepend prefix " +
+                        "to the directory name, not the filename");
+      }
       else { filePrefix = oldPrefix; }
     }
 
@@ -251,6 +255,8 @@ module.exports = function gruntTask(grunt) {
       return grunt.file.read(filePath);
     }
 
+    grunt.log.error("Warning: partial reference " + name.yellow + " yields " +
+                    filePath.cyan + ", which does not exist");
     return "";
   };
 
