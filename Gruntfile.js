@@ -136,6 +136,43 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_partial_prefix_dir.html'}
         ]
       },
+      partials_fprefix: {  // like partials_prefix, but using new options
+        options: {
+          directory: 'test/fixtures/partials/',
+          filenamePrefix: 'pre_',
+          clear_cache: true
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial.mustache',
+           dest: 'tmp/hello_partial_fprefix.html'}
+        ]
+      },
+      partials_dprefix: {  // like partials_prefix_dir, but using new options
+        options: {
+          directory: 'test/fixtures/partials/',
+          directoryPrefix: 'sub-',
+          clear_cache: true
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial_dir.mustache',
+           dest: 'tmp/hello_partial_dprefix.html'}
+        ]
+      },
+      partials_dfprefixes: {  // new functionality combining both new prefixes
+        options: {
+          directory: 'test/fixtures/partials/',
+          directoryPrefix: 'sub-',
+          filenamePrefix: 'pre_',
+          clear_cache: true
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial_dir.mustache',
+           dest: 'tmp/hello_partial_dfprefixes.html'}
+        ]
+      },
       partials_function: {
         options: {
           partial_finder: function(name) {

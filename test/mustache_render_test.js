@@ -129,7 +129,7 @@ exports.mustache_render = {
     test.done();
   },
 
-  partials_prefix: function(test) {
+  partials_prefix: function(test) {  // 'prefix' using a bare filename
     test.expect(1);
 
     var actual = grunt.file.read('tmp/hello_partial_prefix.html');
@@ -139,13 +139,44 @@ exports.mustache_render = {
     test.done();
   },
 
-  partials_prefix_dir: function(test) {
+  partials_prefix_dir: function(test) {  // 'prefix' using a path w/ directory
     test.expect(1);
 
     var actual = grunt.file.read('tmp/hello_partial_prefix_dir.html');
     var expected = grunt.file.read('test/expected/hello_prefix_dir.html');
     test.equal(actual, expected, 'should find partials w/ old-style prefix ' +
       'using legacy behavior when combined with a subdirectory');
+
+    test.done();
+  },
+
+  partials_fprefix: function(test) {  // replaces partials_prefix
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_partial_fprefix.html');
+    var expected = grunt.file.read('test/expected/hello_prefix.html');
+    test.equal(actual, expected, 'should find partials w/ filenamePrefix.');
+
+    test.done();
+  },
+
+  partials_dprefix: function(test) {  // replaces partials_prefix_dir
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_partial_dprefix.html');
+    var expected = grunt.file.read('test/expected/hello_prefix_dir.html');
+    test.equal(actual, expected, 'should find partials w/ directoryPrefix.');
+
+    test.done();
+  },
+
+  partials_dfprefixes: function(test) {  // combines previous prefix concepts
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_partial_dfprefixes.html');
+    var expected = grunt.file.read('test/expected/hello_dfprefixes.html');
+    test.equal(actual, expected, 'should find partials w/ both ' +
+      'directoryPrefix and filenamePrefix together.');
 
     test.done();
   },
