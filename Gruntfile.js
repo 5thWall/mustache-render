@@ -139,7 +139,7 @@ module.exports = function(grunt) {
       partials_fprefix: {  // like partials_prefix, but using new options
         options: {
           directory: 'test/fixtures/partials/',
-          filenamePrefix: 'pre_',
+          prefix_file: 'pre_',
           clear_cache: true
         },
         files: [
@@ -151,7 +151,7 @@ module.exports = function(grunt) {
       partials_dprefix: {  // like partials_prefix_dir, but using new options
         options: {
           directory: 'test/fixtures/partials/',
-          directoryPrefix: 'sub-',
+          prefix_dir: 'sub-',
           clear_cache: true
         },
         files: [
@@ -163,8 +163,8 @@ module.exports = function(grunt) {
       partials_dfprefixes: {  // new functionality combining both new prefixes
         options: {
           directory: 'test/fixtures/partials/',
-          directoryPrefix: 'sub-',
-          filenamePrefix: 'pre_',
+          prefix_dir: 'sub-',
+          prefix_file: 'pre_',
           clear_cache: true
         },
         files: [

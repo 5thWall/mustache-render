@@ -155,7 +155,7 @@ exports.mustache_render = {
 
     var actual = grunt.file.read('tmp/hello_partial_fprefix.html');
     var expected = grunt.file.read('test/expected/hello_prefix.html');
-    test.equal(actual, expected, 'should find partials w/ filenamePrefix.');
+    test.equal(actual, expected, 'should find partials w/ prefix_file.');
 
     test.done();
   },
@@ -165,7 +165,7 @@ exports.mustache_render = {
 
     var actual = grunt.file.read('tmp/hello_partial_dprefix.html');
     var expected = grunt.file.read('test/expected/hello_prefix_dir.html');
-    test.equal(actual, expected, 'should find partials w/ directoryPrefix.');
+    test.equal(actual, expected, 'should find partials w/ prefix_dir.');
 
     test.done();
   },
@@ -176,7 +176,7 @@ exports.mustache_render = {
     var actual = grunt.file.read('tmp/hello_partial_dfprefixes.html');
     var expected = grunt.file.read('test/expected/hello_dfprefixes.html');
     test.equal(actual, expected, 'should find partials w/ both ' +
-      'directoryPrefix and filenamePrefix together.');
+      'prefix_dir and prefix_file together.');
 
     test.done();
   },
