@@ -241,9 +241,14 @@ module.exports = function gruntTask(grunt) {
       else { filePrefix = oldPrefix; }
     }
 
-    if (hasDir && dirPrefix && ['.', '/'].indexOf(dirname[0]) !== -1) {
-      throw new Error("cannot use prefix when using a partial reference " +
-                      "that points outside of the base directory");
+    if (hasDir) {
+      if (dirPrefix && ['.', '/'].indexOf(dirname[0]) !== -1) {
+        throw new Error("cannot use prefix when using a partial reference " +
+                        "that points outside of the base directory");
+      }
+    } else if (dirPrefix) {
+      grunt.log.error("Warning: directoryPrefix " + dirPrefix.cyan + " has " +
+                      "no effect for partial reference " + name.yellow);
     }
 
     var basename = path.basename(name);
