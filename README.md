@@ -126,11 +126,20 @@ Default value: `".mustache"`
 
 `mustache-render` will use this extension when looking up partials.
 
-#### options.prefix
+#### options.filenamePrefix and options.directoryPrefix
 Type: `String`  
 Default value: `""`
 
-`mustache-render` will use this as a common prefix when looking up partials. So given the prefix: `part_` for a partial named `hello` it will search for a file named `part_hello.mustache`.
+`mustache-render` will use these as common prefixes when looking up partials,
+with `filenamePrefix` prepended onto the filename and `directoryPrefix`
+prepended onto the leading directory (if any). For example, given
+`filenamePrefix: 'part_'` and `directoryPrefix: 'sub_'`, a partial reference
+for `a/hello` would search for a file named `sub_a/part_hello.mustache`.
+
+*Note:* Versions 1.6 and earlier of the plug-in use an option called `prefix`,
+which prepended onto the partial reference, regardless of whether it included
+a directory or not. This option is still supported for backward compatibility
+and maintains the same behavior.
 
 #### options.clear_cache
 Type: `Boolean`  
