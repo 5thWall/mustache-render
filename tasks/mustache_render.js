@@ -21,7 +21,8 @@ module.exports = function gruntTask(grunt) {
     prefix : "",  // discouraged; use prefix_dir and/or prefix_file
     prefix_dir : "",
     prefix_file : "",
-    clear_cache : false
+    clear_cache : false,
+    escape: true
   };
 
   /**
@@ -315,6 +316,10 @@ module.exports = function gruntTask(grunt) {
       var renderer = new GMR(this.options);
 
       if (renderer.options.clear_cache) { mustache.clearCache(); }
+
+      if (!renderer.options.escape) { 
+        mustache.escape = function (text) { return text; }
+      }
 
       Promise.all(files.map(function renderFile(fileData) {
         return renderer.render(fileData.data, fileData.template, fileData.dest);
