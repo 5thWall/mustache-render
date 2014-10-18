@@ -166,10 +166,14 @@ Default value: `undefined`
 These two slots can be used to fill in a default `data` or `template` value for any item in your `files` list that does not already have one specified.  This can be handy if you want to dynamically build the `files` list and apply the same `data` or `template` source to every item in the list.
 
 ### options.escape
-Type: `Boolean`  
+Type: `Boolean` or `Function`  
 Default value: `true`
 
-If set to `false` it disables default HTML escaping. That means that `{{var}}` will not be escaped. This is usefull for templating files that are not HTML.
+By default (`true`), mustache will escape special HTML characters unless explicitly disabled in the template body (e.g. by using triple mustaches, `{{{var}}}`).
+
+If set to `false` it disables default HTML escaping. That means that `{{var}}` will not be escaped. This is useful for templating files that are not HTML.
+
+To implement custom escape handling specific to your needs, you may instead pass a function that accepts and returns a string.
 
 ### Usage Examples
 

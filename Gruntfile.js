@@ -246,6 +246,16 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_escaped.html'}
         ]
       },
+      escaped_custom: {
+        options: {
+          escape: function (text) { return '*' + text.toUpperCase() + '*'; }
+        },
+        files: [
+          {data: { greeting: "Hello", target: "world" },
+           template: 'test/fixtures/templates/hello_world.html.mustache',
+           dest: 'tmp/hello_escaped_custom.html'}
+        ]
+      },
       mustache_unchanged: {  // must be last; tests leakage of mustache.escape
         options: {
           escape: false,

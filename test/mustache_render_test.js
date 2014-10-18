@@ -264,6 +264,16 @@ exports.mustache_render = {
     test.done();
   },
 
+  escaped_custom: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_escaped_custom.html');
+    var expected = grunt.file.read('test/expected/hello_escaped_custom.html');
+    test.equal(actual, expected, 'should allow user-defined escape functions.');
+
+    test.done();
+  },
+
   mustache_unchanged: function(test) {
     test.expect(1);
 

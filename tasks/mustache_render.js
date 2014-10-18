@@ -321,8 +321,10 @@ module.exports = function gruntTask(grunt) {
         mustache.escape = escapeHtml;
       } else if (renderer.options.escape === false) {
         mustache.escape = function (text) { return text; };
+      } else if (typeof renderer.options.escape === 'function') {
+        mustache.escape = renderer.options.escape;
       } else {
-        throw new Error("escape must be true or false");
+        throw new Error("escape must be true, false, or a function");
       }
 
       var done = (function (gruntDone) {
