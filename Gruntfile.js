@@ -102,7 +102,17 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_partial_extension.html'}
         ]
       },
-      partials_prefix: {
+      partials_full: {
+        options: {
+          clear_cache: true
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial_full.mustache',
+           dest: 'tmp/hello_partial_full.html'}
+        ]
+      },
+      partials_prefix: {  // tests backward compatibility w/ 'prefix'
         options: {
           directory: 'test/fixtures/partials/',
           prefix: 'pre_',
@@ -114,7 +124,55 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_partial_prefix.html'}
         ]
       },
-
+      partials_prefix_dir: {  // tests backward compatibility w/ 'prefix'
+        options: {
+          directory: 'test/fixtures/partials/',
+          prefix: 'sub-',
+          clear_cache: true
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial_dir.mustache',
+           dest: 'tmp/hello_partial_prefix_dir.html'}
+        ]
+      },
+      partials_fprefix: {  // like partials_prefix, but using new options
+        options: {
+          directory: 'test/fixtures/partials/',
+          prefix_file: 'pre_',
+          clear_cache: true
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial.mustache',
+           dest: 'tmp/hello_partial_fprefix.html'}
+        ]
+      },
+      partials_dprefix: {  // like partials_prefix_dir, but using new options
+        options: {
+          directory: 'test/fixtures/partials/',
+          prefix_dir: 'sub-',
+          clear_cache: true
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial_dir.mustache',
+           dest: 'tmp/hello_partial_dprefix.html'}
+        ]
+      },
+      partials_dfprefixes: {  // new functionality combining both new prefixes
+        options: {
+          directory: 'test/fixtures/partials/',
+          prefix_dir: 'sub-',
+          prefix_file: 'pre_',
+          clear_cache: true
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/hello_partial_dir.mustache',
+           dest: 'tmp/hello_partial_dfprefixes.html'}
+        ]
+      },
       partials_function: {
         options: {
           partial_finder: function(name) {
