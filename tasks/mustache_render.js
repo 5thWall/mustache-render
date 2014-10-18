@@ -10,6 +10,7 @@
 
 module.exports = function gruntTask(grunt) {
   var mustache = require("mustache"),
+  escapeHtml = mustache.escape,
   path = require('path'),
   Promise = require('es6-promise').Promise,
   request = require('request'),
@@ -312,14 +313,24 @@ module.exports = function gruntTask(grunt) {
         return;
       }
 
-      var done = this.async();
       var renderer = new GMR(this.options);
 
       if (renderer.options.clear_cache) { mustache.clearCache(); }
 
-      if (!renderer.options.escape) { 
-        mustache.escape = function (text) { return text; }
+      if (renderer.options.escape === true) {
+        mustache.escape = escapeHtml;
+      } else if (renderer.options.escape === false) {
+        mustache.escape = function (text) { return text; };
+      } else {
+        throw new Error("escape must be true or false");
       }
+
+      var done = (function (gruntDone) {
+        return function (success) {
+          mustache.escape = escapeHtml;  // do not leak custom escape function
+          gruntDone(success);
+        };
+      }(this.async()));
 
       Promise.all(files.map(function renderFile(fileData) {
         return renderer.render(fileData.data, fileData.template, fileData.dest);
