@@ -55,13 +55,14 @@ module.exports = function gruntTask(grunt) {
    */
   GMR.prototype.render = function render(data, template, dest) {
     return new Promise(function renderPromise(resolve, reject) {
-      Promise.all([this._getData(data), this._getRenderFn(template)]).
+      Promise.all([this._getData(data), this._getBody(template)]).
 
-      then(function gotDataAndRenderFn(results) {
-        var dataObj = results[0], renderFn = results[1];
+      then(function gotDataAndBody(results) {
+        var dataObj = results[0], body = results[1];
 
         grunt.log.writeln("Output " + dest + ":");
-        grunt.file.write(dest, renderFn(dataObj, this._getPartial.bind(this)));
+        grunt.file.write(dest, mustache.render(body, dataObj,
+                                               this._getPartial.bind(this)));
         grunt.log.ok(
           (
             typeof dataObj === 'object' ?
@@ -75,7 +76,7 @@ module.exports = function gruntTask(grunt) {
         resolve();
       }.bind(this)).
 
-      catch(function errorFromDataOrRenderFn(exception) {
+      catch(function errorFromDataOrBody(exception) {
         grunt.log.writeln(dest + "... " + "ERROR".red);
         reject(exception);
       });
@@ -158,22 +159,22 @@ module.exports = function gruntTask(grunt) {
     throw new Error("Data file must be JSON or YAML. Given: " + dataPath);
   };
 
-  // Internal: Ensure template is in proper format and retrieve render function.
-  GMR.prototype._getRenderFn = function getRenderFn(template) {
-    return new Promise(function getRenderFnPromise(resolve, reject) {
+  // Internal: Ensure template is in proper format and retrieve its body.
+  GMR.prototype._getBody = function getBody(template) {
+    return new Promise(function getBodyPromise(resolve, reject) {
       if (typeof template !== 'string' || template === '') {
         reject(new Error("Template path or URL must be given as a string"));
       } else if (/^https?:/.test(template)) {
-        resolve(this._getRenderFnFromUrl(template));
+        resolve(this._getBodyFromUrl(template));
       } else {
-        resolve(this._compileTemplate(template));
+        resolve(this._getBodyFromFile(template));
       }
     }.bind(this));
   };
 
-  // Internal: Get rendering function from remote URL.
-  GMR.prototype._getRenderFnFromUrl = function getRenderFnFromUrl(templateUrl) {
-    var promises = this._getRenderFnFromUrl.promiseCache;
+  // Internal: Fetch the template body from the remote URL.
+  GMR.prototype._getBodyFromUrl = function getBodyFromUrl(templateUrl) {
+    var promises = this._getBodyFromUrl.promiseCache;
 
     if (promises[templateUrl] === undefined) {
       grunt.log.writeln("Fetching template from " + templateUrl + "...");
@@ -193,7 +194,7 @@ module.exports = function gruntTask(grunt) {
           } else if (typeof body !== 'string' || body === '') {
             reject(new Error("Got empty body while downloading template"));
           } else {
-            resolve(mustache.compile(body));
+            resolve(body);
           }
         });
       });
@@ -201,11 +202,11 @@ module.exports = function gruntTask(grunt) {
 
     return promises[templateUrl];
   };
-  GMR.prototype._getRenderFnFromUrl.promiseCache = {};
+  GMR.prototype._getBodyFromUrl.promiseCache = {};
 
-  // Internal: Compile template to render function.
-  GMR.prototype._compileTemplate = function compileTemplate(file) {
-    return mustache.compile(grunt.file.read(file));
+  // Internal: Fetch the template body from the local file.
+  GMR.prototype._getBodyFromFile = function getBodyFromFile(file) {
+    return grunt.file.read(file);
   };
 
   // Internal: Delegate to user provided function if present
