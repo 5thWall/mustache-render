@@ -228,6 +228,33 @@ module.exports = function(grunt) {
              return dest + '/' + filename.replace(/\.mustache$/, '');
            }}
         ]
+      },
+      unescaped: {
+        options: {
+          escape: false,
+        },
+        files: [
+          {data: { greeting: "<em>Hello</em>", target: "<strong>world</strong>" },
+           template: 'test/fixtures/templates/hello_world.html.mustache',
+           dest: 'tmp/hello_unescaped.html'}
+        ]
+      },
+      escaped: {
+        files: [
+          {data: { greeting: "Hello & welcome", target: "world :>" },
+           template: 'test/fixtures/templates/hello_world.html.mustache',
+           dest: 'tmp/hello_escaped.html'}
+        ]
+      },
+      mustache_unchanged: {  // must be last; tests leakage of mustache.escape
+        options: {
+          escape: false,
+        },
+        files: [
+          {data: { greeting: 'dummy', target: 'dummy' },
+           template: 'test/fixtures/templates/hello_world.html.mustache',
+           dest: 'tmp/hello_dummy.html'}
+        ]
       }
     },
 
