@@ -1,5 +1,11 @@
 # Changelog
 
+__1.7.0__
+
+ * Add support for disabling or customizing escaping for a build target
+ * Disambiguate the options used for looking up prefixed partials
+ * Update dependency versions (es6-promise, js-yaml, mustache, request)
+
 __1.6.0__
 
  * Add support for dynamically building file list
