@@ -1,6 +1,7 @@
 'use strict';
 
 var grunt = require('grunt');
+var mustache = require('mustache');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -239,6 +240,46 @@ exports.mustache_render = {
       test.equal(actual, expected, 'should correctly process multiple ' +
         'templates using a single data source via an expansion ' + filename);
     });
+
+    test.done();
+  },
+
+  unescaped: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_unescaped.html');
+    var expected = grunt.file.read('test/expected/hello_unescaped.html');
+    test.equal(actual, expected, 'should allow escaping to be disabled.');
+
+    test.done();
+  },
+
+  escaped: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_escaped.html');
+    var expected = grunt.file.read('test/expected/hello_escaped.html');
+    test.equal(actual, expected, 'should correctly escape HTML entities.');
+
+    test.done();
+  },
+
+  escaped_custom: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_escaped_custom.html');
+    var expected = grunt.file.read('test/expected/hello_escaped_custom.html');
+    test.equal(actual, expected, 'should allow user-defined escape functions.');
+
+    test.done();
+  },
+
+  mustache_unchanged: function(test) {
+    test.expect(1);
+
+    var actual = mustache.render('{{input}}', {input: 'input &<>'});
+    var expected = 'input &amp;&lt;&gt;';
+    test.equal(actual, expected, 'should not leave mustache escape changed.');
 
     test.done();
   },
