@@ -156,6 +156,8 @@ module.exports = function gruntTask(grunt) {
       return grunt.file.readJSON(dataPath);
     } else if (/\.ya?ml/i.test(dataPath)) {
       return grunt.file.readYAML(dataPath);
+    } else if (/\.js/i.test(dataPath)) {
+      return require(path.resolve('.', dataPath));
     }
 
     throw new Error("Data file must be JSON or YAML. Given: " + dataPath);

@@ -80,6 +80,13 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_arbitrary.html'}
         ]
       },
+      js_data: {
+         files: [
+           {data: 'test/fixtures/objects/hello_world.js',
+            template: 'test/fixtures/templates/hello_world.html.mustache',
+            dest: 'tmp/hello_js.html'}
+         ]
+      },
       partials_directory: {
         options: {
           directory: 'test/fixtures/partials/'
