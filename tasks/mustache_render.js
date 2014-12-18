@@ -152,11 +152,11 @@ module.exports = function gruntTask(grunt) {
 
   // Internal: Read JSON or YAML data from file.
   GMR.prototype._getDataFromFile = function getDataFromFile(dataPath) {
-    if (/\.json/i.test(dataPath)) {
+    if (/\.json$/i.test(dataPath)) {
       return grunt.file.readJSON(dataPath);
-    } else if (/\.ya?ml/i.test(dataPath)) {
+    } else if (/\.ya?ml$/i.test(dataPath)) {
       return grunt.file.readYAML(dataPath);
-    } else if (/\.js/i.test(dataPath)) {
+    } else if (/\.js$/i.test(dataPath)) {
       return require(path.resolve('.', dataPath));
     }
 
