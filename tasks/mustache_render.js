@@ -157,7 +157,14 @@ module.exports = function gruntTask(grunt) {
     } else if (/\.ya?ml$/i.test(dataPath)) {
       return grunt.file.readYAML(dataPath);
     } else if (/\.js$/i.test(dataPath)) {
-      return require(path.resolve('.', dataPath));
+      var exported = require(path.resolve('.', dataPath));
+      if (typeof exported !== 'object') {
+        grunt.log.error("Warning: " + dataPath + " exported a non-object");
+      } else if (Object.keys(exported).length === 0) {
+        grunt.log.error("Warning: " + dataPath + " does not export " +
+                        "anything; did you assign to `module.exports`?");
+      }
+      return exported;
     }
 
     throw new Error("Data file must be JSON file, YAML file, or JS module. " +
