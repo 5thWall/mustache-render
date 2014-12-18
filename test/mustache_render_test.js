@@ -106,7 +106,7 @@ exports.mustache_render = {
     var actual = grunt.file.read('tmp/hello_js.html');
     var expected = grunt.file.read('test/expected/hello_world.html');
 
-    test.equal(actual, expected, 'should render when given arbitrary data.');
+    test.equal(actual, expected, 'should render when given a JavaScript module.');
 
     test.done();
   },

@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/5thWall/mustache-render.png?branch=master)](https://travis-ci.org/5thWall/mustache-render)
 [![NPM version](https://badge.fury.io/js/grunt-mustache-render.png)](http://badge.fury.io/js/grunt-mustache-render)
 
-This is a grunt plugin to render [mustache](http://mustache.github.io/) templates. It takes data in `JSON`, `YAML`, `JS` or `POJO` (Plain Ol' JavaScript Object) format. It allows you to specify a folder for partials, instead of needing to list them individually.
+This is a grunt plugin to render [mustache](http://mustache.github.io/) templates. It takes data in static `JSON`, static `YAML`, `JS` module, or a `POJO` (Plain Ol' JavaScript Object) format. It allows you to specify a folder for partials, instead of needing to list them individually.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -37,7 +37,7 @@ grunt.initConfig({
       },
       files : [
         {
-          data: // Path or URL to JS, JSON or YAML file, or POJO
+          data: // Path to JS module, path or URL to JSON or YAML, or POJO
           template: // Path or URL to template file
           dest: // Path to output destination here
         }

@@ -160,7 +160,8 @@ module.exports = function gruntTask(grunt) {
       return require(path.resolve('.', dataPath));
     }
 
-    throw new Error("Data file must be JSON or YAML. Given: " + dataPath);
+    throw new Error("Data file must be JSON file, YAML file, or JS module. " +
+                    "Given: " + dataPath);
   };
 
   // Internal: Ensure template is in proper format and retrieve its body.
