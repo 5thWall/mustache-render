@@ -152,13 +152,23 @@ module.exports = function gruntTask(grunt) {
 
   // Internal: Read JSON or YAML data from file.
   GMR.prototype._getDataFromFile = function getDataFromFile(dataPath) {
-    if (/\.json/i.test(dataPath)) {
+    if (/\.json$/i.test(dataPath)) {
       return grunt.file.readJSON(dataPath);
-    } else if (/\.ya?ml/i.test(dataPath)) {
+    } else if (/\.ya?ml$/i.test(dataPath)) {
       return grunt.file.readYAML(dataPath);
+    } else if (/\.js$/i.test(dataPath)) {
+      var exported = require(path.resolve('.', dataPath));
+      if (typeof exported !== 'object') {
+        grunt.log.error("Warning: " + dataPath + " exported a non-object");
+      } else if (Object.keys(exported).length === 0) {
+        grunt.log.error("Warning: " + dataPath + " does not export " +
+                        "anything; did you assign to `module.exports`?");
+      }
+      return exported;
     }
 
-    throw new Error("Data file must be JSON or YAML. Given: " + dataPath);
+    throw new Error("Data file must be JSON file, YAML file, or JS module. " +
+                    "Given: " + dataPath);
   };
 
   // Internal: Ensure template is in proper format and retrieve its body.
