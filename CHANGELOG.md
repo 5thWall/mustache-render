@@ -1,5 +1,10 @@
 # Changelog
 
+__1.8.0__
+
+ * Add support for using a local JavaScript module as a data source
+ * Update mustache dependency to v1.0.0
+
 __1.7.0__
 
  * Add support for disabling or customizing escaping for a build target
