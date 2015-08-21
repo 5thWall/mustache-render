@@ -141,6 +141,25 @@ which prepended onto the partial reference, regardless of whether it included
 a directory or not. This option is still supported for backward compatibility
 and maintains the same behavior.
 
+#### options.glob
+Type: `String`  
+Default value: `""`
+
+A glob pattern to use to search for partials. If this option is set, `options.prefix_file`, `options.prefix_dir`,
+`options.prefix` and `options.extension` will be ignored. The glob pattern will be expanded using 
+[`grunt.file.expand`](http://gruntjs.com/api/grunt.file#grunt.file.expand) and the first file found will be used.
+If more than one file is found, a warning will be printed.
+
+You can use this variables in the pattern:
+ * `$0` The whole partial name
+ * `$1` The partial name's directory part
+ * `$2` The partial name's basename part
+
+Examples:
+ * `prefix_dir$1/prefix_file$2` does the same as using `options.prefix_file` and `options.prefix_dir`
+ * `$0.*` allows any extension
+ * `{images/$0.svg,partials/$0.mustache}` seaches for a partial either as `name.svg` in the `image` folder or as `name.mustache` in the `partials` folder.
+
 #### options.clear_cache
 Type: `Boolean`  
 Default value: `false`
