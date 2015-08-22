@@ -203,6 +203,28 @@ exports.mustache_render = {
     test.done();
   },
 
+  partials_glob_df: function(test) {  // glob expansion partial search (like dfprefixes)
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_partial_globdf.html');
+    var expected = grunt.file.read('test/expected/hello_dfprefixes.html');
+    test.equal(actual, expected, 'should find partials w/ glob ' +
+      '"sub-$1/pre_$2.mustache".');
+
+    test.done();
+  },
+
+  partials_glob: function(test) {  // glob expansion partial search
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/hello_partial_glob.html');
+    var expected = grunt.file.read('test/expected/hello_glob.html');
+    test.equal(actual, expected, 'should find partials w/ glob ' +
+      '"?(+sub-$1)/$2.*".');
+
+    test.done();
+  },
+
   batch_single_template_multiple_json_via_map: function(test) {
     test.expect(3);
 

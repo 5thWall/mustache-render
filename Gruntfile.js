@@ -193,6 +193,30 @@ module.exports = function(grunt) {
            dest: 'tmp/hello_partial_function.html'}
         ]
       },
+      partials_glob_df: { // glob expansion partial search (like partials_dfprefixes)
+          options: {
+            directory: 'test/fixtures/partials/',
+            glob: 'sub-$1/pre_$2.mustache',
+            clear_cache: true
+          },
+          files: [
+            {data: 'test/fixtures/objects/hello_world.json',
+             template: 'test/fixtures/templates/hello_partial_dir.mustache',
+             dest: 'tmp/hello_partial_globdf.html'}
+          ]
+      },
+      partials_glob: {
+          options: {
+            directory: 'test/fixtures/partials/',
+            glob: '{sub-$1,.}/$2.!(ms)',
+            clear_cache: true
+          },
+          files: [
+            {data: 'test/fixtures/objects/hello_world.json',
+             template: 'test/fixtures/templates/hello_partial_glob.mustache',
+             dest: 'tmp/hello_partial_glob.html'}
+          ]
+      },
       batch_single_template_multiple_json_via_map: {
         options: {
           template: 'test/fixtures/templates/hello_world.html.mustache'
