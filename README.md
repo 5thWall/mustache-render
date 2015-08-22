@@ -1,4 +1,4 @@
-# grunt-mustache-render v1.8.0
+# grunt-mustache-render v1.9.0
 
 [![Build Status](https://travis-ci.org/5thWall/mustache-render.png?branch=master)](https://travis-ci.org/5thWall/mustache-render)
 [![NPM version](https://badge.fury.io/js/grunt-mustache-render.png)](http://badge.fury.io/js/grunt-mustache-render)

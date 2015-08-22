@@ -1,5 +1,9 @@
 # Changelog
 
+__1.9.0__
+
+ * Add support for specifying partial location using glob patterns
+
 __1.8.0__
 
  * Add support for using a local JavaScript module as a data source
