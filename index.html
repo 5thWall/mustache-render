@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,7 +21,7 @@
       <div class="inner">
         <h1>Mustache-render</h1>
         <h2>Grunt plugin for testing mustache templates</h2>
-        <a href="https://github.com/5thWall/mustache-render" class="button"><small>View project on</small>GitHub</a>
+        <a href="https://github.com/5thWall/mustache-render" class="button"><small>View project on</small> GitHub</a>
       </div>
     </header>
 
@@ -29,89 +29,123 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a name="grunt-mustache-render-v130" class="anchor" href="#grunt-mustache-render-v130"><span class="octicon octicon-link"></span></a>grunt-mustache-render v1.3.0</h1>
+<a id="grunt-mustache-render-v190" class="anchor" href="#grunt-mustache-render-v190" aria-hidden="true"><span class="octicon octicon-link"></span></a>grunt-mustache-render v1.9.0</h1>
 
 <p><a href="https://travis-ci.org/5thWall/mustache-render"><img src="https://travis-ci.org/5thWall/mustache-render.png?branch=master" alt="Build Status"></a>
 <a href="http://badge.fury.io/js/grunt-mustache-render"><img src="https://badge.fury.io/js/grunt-mustache-render.png" alt="NPM version"></a></p>
 
-<p>This is a grunt plugin to render <a href="http://mustache.github.io/">mustache</a> templates. It takes data in <code>JSON</code>, <code>YAML</code>, or <code>POJO</code> (Plain Ol' JavaScript Object) format. It allows you to specify a folder for partials, instead of needing to list them individually.</p>
+<p>This is a grunt plugin to render <a href="http://mustache.github.io/">mustache</a> templates. It takes data in static <code>JSON</code>, static <code>YAML</code>, <code>JS</code> module, or a <code>POJO</code> (Plain Ol' JavaScript Object) format. It allows you to specify a folder for partials, instead of needing to list them individually.</p>
 
 <h2>
-<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started</h2>
 
 <p>This plugin requires Grunt <code>~0.4.1</code></p>
 
 <p>If you haven't used <a href="http://gruntjs.com/">Grunt</a> before, be sure to check out the <a href="http://gruntjs.com/getting-started">Getting Started</a> guide, as it explains how to create a <a href="http://gruntjs.com/sample-gruntfile">Gruntfile</a> as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:</p>
 
-<pre lang="shell"><code>npm install grunt-mustache-render --save-dev
-</code></pre>
+<div class="highlight highlight-shell"><pre>npm install grunt-mustache-render --save-dev</pre></div>
 
 <p>Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-mustache-render'</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-js"><pre>grunt.<span class="pl-c1">loadNpmTasks</span>(<span class="pl-s"><span class="pl-pds">'</span>grunt-mustache-render<span class="pl-pds">'</span></span>);</pre></div>
 
 <h2>
-<a name="the-mustache_render-task" class="anchor" href="#the-mustache_render-task"><span class="octicon octicon-link"></span></a>The "mustache_render" task</h2>
+<a id="the-mustache_render-task" class="anchor" href="#the-mustache_render-task" aria-hidden="true"><span class="octicon octicon-link"></span></a>The "mustache_render" task</h2>
 
 <h3>
-<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h3>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h3>
 
 <p>In your project's Gruntfile, add a section named <code>mustache_render</code> to the data object passed into <code>grunt.initConfig()</code>.</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
-  <span class="nx">mustache_render</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-      <span class="c1">// Task global options go here</span>
-    <span class="p">},</span>
-    <span class="nx">your_target</span><span class="o">:</span> <span class="p">{</span>
-      <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-        <span class="c1">// Target specific options go here</span>
-      <span class="p">},</span>
-      <span class="nx">files</span> <span class="o">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-          <span class="nx">data</span><span class="o">:</span> <span class="c1">// Path to JSON or YAML file, or POJO</span>
-          <span class="nx">template</span><span class="o">:</span> <span class="c1">// Path to template file</span>
-          <span class="nx">dest</span><span class="o">:</span> <span class="c1">// Path to output destination here</span>
-        <span class="p">}</span>
-      <span class="p">]</span>
-    <span class="p">},</span>
-  <span class="p">},</span>
-<span class="p">})</span>
-</pre></div>
+<div class="highlight highlight-js"><pre>grunt.<span class="pl-c1">initConfig</span>({
+  mustache_render<span class="pl-k">:</span> {
+    options<span class="pl-k">:</span> {
+      <span class="pl-c">// Task global options go here</span>
+    },
+    your_target<span class="pl-k">:</span> {
+      options<span class="pl-k">:</span> {
+        <span class="pl-c">// Target specific options go here</span>
+      },
+      files <span class="pl-k">:</span> [
+        {
+          data<span class="pl-k">:</span> <span class="pl-c">// Path to JS module, path or URL to JSON or YAML, or POJO</span>
+          template<span class="pl-k">:</span> <span class="pl-c">// Path or URL to template file</span>
+          dest<span class="pl-k">:</span> <span class="pl-c">// Path to output destination here</span>
+        }
+      ]
+    },
+  },
+})</pre></div>
 
-<p><strong>Note:</strong> The <code>files</code> parameter <em>must</em> be an array, and <em>must</em> conform to the format specified above. Each object in the file array represents <em>one</em> rendered template. Data files can be in either <code>JSON</code> or <code>YAML</code> format or as a <code>POJO</code> (Plain Ol' JavaScript Object).</p>
+<p><strong>Note:</strong> The <code>files</code> parameter <em>must</em> be an array, and <em>must</em> conform to the format specified above. Each object in the file array represents <em>one</em> rendered template. Data files can be in either <code>JSON</code>, <code>YAML</code> format, or as either an external <code>JS</code> file via <code>module.exports</code> or a <code>POJO</code> (Plain Ol' JavaScript Object).</p>
 
 <h4>
-<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples:</h4>
+<a id="building-long-file-lists" class="anchor" href="#building-long-file-lists" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building Long File Lists</h4>
 
-<div class="highlight highlight-js"><pre><span class="nx">files</span><span class="o">:</span> <span class="p">[</span>
-  <span class="p">{</span><span class="nx">data</span><span class="o">:</span> <span class="s2">"path/to/data/file.json"</span><span class="p">,</span>
-   <span class="nx">template</span><span class="o">:</span> <span class="s2">"path/to/template.mustache"</span><span class="p">,</span>
-   <span class="nx">dest</span><span class="o">:</span> <span class="s2">"file/to/output.html"</span><span class="p">}</span>
-<span class="p">]</span>
-</pre></div>
+<p>If you want to build out a long list for the <code>files</code> array, perhaps dynamically as described by <a href="http://gruntjs.com/configuring-tasks#building-the-files-object-dynamically">building the files object dynamically</a>, you may use either <code>data</code> <em>or</em> <code>template</code> as the source (<code>src</code>) value as long as you specify the other one by its normal name. See below for some examples.</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">files</span><span class="o">:</span> <span class="p">[</span>
-  <span class="p">{</span><span class="nx">data</span><span class="o">:</span> <span class="p">{</span> <span class="nx">greeting</span><span class="o">:</span> <span class="s2">"Hello"</span><span class="p">,</span> <span class="nx">target</span><span class="o">:</span> <span class="s2">"world"</span> <span class="p">},</span>
-   <span class="nx">template</span><span class="o">:</span> <span class="s2">"path/to/template.mustache"</span><span class="p">,</span>
-   <span class="nx">dest</span><span class="o">:</span> <span class="s2">"file/to/output.html"</span><span class="p">}</span>
-<span class="p">]</span>
-</pre></div>
+<h4>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples:</h4>
+
+<div class="highlight highlight-js"><pre>files<span class="pl-k">:</span> [
+  {data<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>path/to/data/file.json<span class="pl-pds">"</span></span>,
+   template<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>path/to/template.mustache<span class="pl-pds">"</span></span>,
+   dest<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>file/to/output.html<span class="pl-pds">"</span></span>},
+  {data<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>http://api.example.com/file.json<span class="pl-pds">"</span></span>,
+   template<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>http://docs.example.com/report.mustache<span class="pl-pds">"</span></span>,
+   dest<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>file/to/output.html<span class="pl-pds">"</span></span>}
+]</pre></div>
+
+<div class="highlight highlight-js"><pre>files<span class="pl-k">:</span> [
+  {data<span class="pl-k">:</span> { greeting<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Hello<span class="pl-pds">"</span></span>, target<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>world<span class="pl-pds">"</span></span> },
+   template<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>path/to/template.mustache<span class="pl-pds">"</span></span>,
+   dest<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>file/to/output.html<span class="pl-pds">"</span></span>},
+  {data<span class="pl-k">:</span> { greeting<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Hola<span class="pl-pds">"</span></span>, target<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>mundo<span class="pl-pds">"</span></span> },
+   template<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>http://docs.example.com/report.mustache<span class="pl-pds">"</span></span>,
+   dest<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>file/to/output.html<span class="pl-pds">"</span></span>}
+]</pre></div>
+
+<div class="highlight highlight-js"><pre>options<span class="pl-k">:</span> {template<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>common-template.mustache<span class="pl-pds">'</span></span>},
+files<span class="pl-k">:</span> {
+  <span class="pl-s"><span class="pl-pds">'</span>file/to/output-1.html<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>data/to/read-1.json<span class="pl-pds">'</span></span>,
+  <span class="pl-s"><span class="pl-pds">'</span>file/to/output-2.html<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>data/to/read-2.json<span class="pl-pds">'</span></span>,
+  <span class="pl-s"><span class="pl-pds">'</span>file/to/output-3.html<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>data/to/read-3.json<span class="pl-pds">'</span></span>
+}</pre></div>
+
+<div class="highlight highlight-js"><pre>files<span class="pl-k">:</span> [
+  {expand<span class="pl-k">:</span> <span class="pl-c1">true</span>,
+   src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>data/to/read-*.json<span class="pl-pds">'</span></span>,
+   template<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>common-template.mustache<span class="pl-pds">'</span></span>,
+   dest<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>dest/directory/<span class="pl-pds">'</span></span>}
+]</pre></div>
+
+<div class="highlight highlight-js"><pre>options<span class="pl-k">:</span> {data<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>common-data.json<span class="pl-pds">'</span></span>},
+files<span class="pl-k">:</span> {
+  <span class="pl-s"><span class="pl-pds">'</span>file/to/output-1.html<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>template/to/read-1.mustache<span class="pl-pds">'</span></span>,
+  <span class="pl-s"><span class="pl-pds">'</span>file/to/output-2.html<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>template/to/read-2.mustache<span class="pl-pds">'</span></span>,
+  <span class="pl-s"><span class="pl-pds">'</span>file/to/output-3.html<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>template/to/read-3.mustache<span class="pl-pds">'</span></span>
+}</pre></div>
+
+<div class="highlight highlight-js"><pre>files<span class="pl-k">:</span> [
+  {expand<span class="pl-k">:</span> <span class="pl-c1">true</span>,
+   src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>template/to/read-*.mustache<span class="pl-pds">'</span></span>,
+   data<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>common-data.js<span class="pl-pds">'</span></span>,
+   dest<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>dest/directory/<span class="pl-pds">'</span></span>}
+]</pre></div>
 
 <h3>
-<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h3>
 
 <h4>
-<a name="optionsdirectory" class="anchor" href="#optionsdirectory"><span class="octicon octicon-link"></span></a>options.directory</h4>
+<a id="optionsdirectory" class="anchor" href="#optionsdirectory" aria-hidden="true"><span class="octicon octicon-link"></span></a>options.directory</h4>
 
 <p>Type: <code>String</code><br>
-Default value: <code>""</code></p>
+Default value: <code>"."</code> (i.e. relative to your <code>Gruntfile.js</code>)</p>
 
 <p>Path to the directory in which partials can be found. Partials are looked up by name in this directory.</p>
 
 <h4>
-<a name="optionsextension" class="anchor" href="#optionsextension"><span class="octicon octicon-link"></span></a>options.extension</h4>
+<a id="optionsextension" class="anchor" href="#optionsextension" aria-hidden="true"><span class="octicon octicon-link"></span></a>options.extension</h4>
 
 <p>Type: <code>String</code><br>
 Default value: <code>".mustache"</code></p>
@@ -119,15 +153,58 @@ Default value: <code>".mustache"</code></p>
 <p><code>mustache-render</code> will use this extension when looking up partials.</p>
 
 <h4>
-<a name="optionsprefix" class="anchor" href="#optionsprefix"><span class="octicon octicon-link"></span></a>options.prefix</h4>
+<a id="optionsprefix_file-and-optionsprefix_dir" class="anchor" href="#optionsprefix_file-and-optionsprefix_dir" aria-hidden="true"><span class="octicon octicon-link"></span></a>options.prefix_file and options.prefix_dir</h4>
 
 <p>Type: <code>String</code><br>
 Default value: <code>""</code></p>
 
-<p><code>mustache-render</code> will use this as a common prefix when looking up partials. So given the prefix: <code>part_</code> for a partial named <code>hello</code> it will search for a file named <code>part_hello.mustache</code>.</p>
+<p><code>mustache-render</code> will use these as common prefixes when looking up partials,
+with <code>prefix_file</code> prepended onto the filename and <code>prefix_dir</code> prepended onto
+the leading directory (if any). For example, given <code>prefix_file: 'part_'</code> and
+<code>prefix_dir: 'sub_'</code>, a partial reference for <code>a/hello</code> would search for a
+file named <code>sub_a/part_hello.mustache</code>.</p>
+
+<p><em>Note:</em> Versions 1.6 and earlier of the plug-in use an option called <code>prefix</code>,
+which prepended onto the partial reference, regardless of whether it included
+a directory or not. This option is still supported for backward compatibility
+and maintains the same behavior.</p>
 
 <h4>
-<a name="optionsclear_cache" class="anchor" href="#optionsclear_cache"><span class="octicon octicon-link"></span></a>options.clear_cache</h4>
+<a id="optionsglob" class="anchor" href="#optionsglob" aria-hidden="true"><span class="octicon octicon-link"></span></a>options.glob</h4>
+
+<p>Type: <code>String</code><br>
+Default value: <code>""</code></p>
+
+<p>A glob pattern to use to search for partials. If this option is set, <code>options.prefix_file</code>, <code>options.prefix_dir</code>,
+<code>options.prefix</code> and <code>options.extension</code> will be ignored. The glob pattern will be expanded using 
+<a href="http://gruntjs.com/api/grunt.file#grunt.file.expand"><code>grunt.file.expand</code></a> and the first file found will be used.
+If more than one file is found, a warning will be printed.</p>
+
+<p>You can use this variables in the pattern:</p>
+
+<ul>
+<li>
+<code>$0</code> The whole partial name</li>
+<li>
+<code>$1</code> The partial name's directory part</li>
+<li>
+<code>$2</code> The partial name's basename part</li>
+</ul>
+
+<p>Examples:</p>
+
+<ul>
+<li>
+<code>prefix_dir$1/prefix_file$2</code> does the same as using <code>options.prefix_file</code> and <code>options.prefix_dir</code>
+</li>
+<li>
+<code>$0.*</code> allows any extension</li>
+<li>
+<code>{images/$0.svg,partials/$0.mustache}</code> seaches for a partial either as <code>name.svg</code> in the <code>image</code> folder or as <code>name.mustache</code> in the <code>partials</code> folder.</li>
+</ul>
+
+<h4>
+<a id="optionsclear_cache" class="anchor" href="#optionsclear_cache" aria-hidden="true"><span class="octicon octicon-link"></span></a>options.clear_cache</h4>
 
 <p>Type: <code>Boolean</code><br>
 Default value: <code>false</code></p>
@@ -135,127 +212,89 @@ Default value: <code>false</code></p>
 <p>Clears the mustache cache before running the target. Mustache will cache partials by name when running multiple tasks, so this option is usefull if <code>options.extension</code>, <code>options.directory</code>, or <code>options.prefix</code> have been changed between tasks.</p>
 
 <h4>
-<a name="optionspartial_finder" class="anchor" href="#optionspartial_finder"><span class="octicon octicon-link"></span></a>options.partial_finder</h4>
+<a id="optionspartial_finder" class="anchor" href="#optionspartial_finder" aria-hidden="true"><span class="octicon octicon-link"></span></a>options.partial_finder</h4>
 
 <p>Type: <code>Function</code><br>
 Default value: <code>null</code></p>
 
 <p>Overrides the default function for finding partials. The function will be passed the name of the partial as a parameter, and must return the text of the partial.</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">partial_finder</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="s2">"Hello, I am a partial with name: "</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">"\n"</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-en">partial_finder</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">name</span>) {
+  <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">"</span>Hello, I am a partial with name: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> name <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;
+}</pre></div>
+
+<h4>
+<a id="optionsdata-and-optionstemplate" class="anchor" href="#optionsdata-and-optionstemplate" aria-hidden="true"><span class="octicon octicon-link"></span></a>options.data and options.template</h4>
+
+<p>Type: anything normally accepted for a file<br>
+Default value: <code>undefined</code></p>
+
+<p>These two slots can be used to fill in a default <code>data</code> or <code>template</code> value for any item in your <code>files</code> list that does not already have one specified.  This can be handy if you want to dynamically build the <code>files</code> list and apply the same <code>data</code> or <code>template</code> source to every item in the list.</p>
 
 <h3>
-<a name="usage-examples" class="anchor" href="#usage-examples"><span class="octicon octicon-link"></span></a>Usage Examples</h3>
+<a id="optionsescape" class="anchor" href="#optionsescape" aria-hidden="true"><span class="octicon octicon-link"></span></a>options.escape</h3>
+
+<p>Type: <code>Boolean</code> or <code>Function</code><br>
+Default value: <code>true</code></p>
+
+<p>By default (<code>true</code>), mustache will escape special HTML characters unless explicitly disabled in the template body (e.g. by using triple mustaches, <code>{{{var}}}</code>).</p>
+
+<p>If set to <code>false</code> it disables default HTML escaping. That means that <code>{{var}}</code> will not be escaped. This is useful for templating files that are not HTML.</p>
+
+<p>To implement custom escape handling specific to your needs, you may instead pass a function that accepts and returns a string.</p>
+
+<h3>
+<a id="usage-examples" class="anchor" href="#usage-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage Examples</h3>
 
 <p>For this Grunt config:</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
-  <span class="nx">mustache_render</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">all</span><span class="o">:</span> <span class="p">{</span>
-      <span class="nx">files</span><span class="o">:</span> <span class="p">[{</span>
-        <span class="nx">data</span><span class="o">:</span> <span class="s2">"data/hello_world.json"</span><span class="p">,</span>
-        <span class="nx">template</span><span class="o">:</span> <span class="s2">"templates/hello_world.mustache"</span><span class="p">,</span>
-        <span class="nx">dest</span><span class="o">:</span> <span class="s2">"public/hello_world.html"</span>
-      <span class="p">}]</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">})</span>
-</pre></div>
+<div class="highlight highlight-js"><pre>grunt.<span class="pl-c1">initConfig</span>({
+  mustache_render<span class="pl-k">:</span> {
+    all<span class="pl-k">:</span> {
+      files<span class="pl-k">:</span> [{
+        data<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>data/hello_world.json<span class="pl-pds">"</span></span>,
+        template<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>templates/hello_world.mustache<span class="pl-pds">"</span></span>,
+        dest<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>public/hello_world.html<span class="pl-pds">"</span></span>
+      }]
+    }
+  }
+})</pre></div>
 
 <p>And this <code>json</code>:</p>
 
-<div class="highlight highlight-js"><pre><span class="p">{</span>
-  <span class="s2">"greeting"</span> <span class="o">:</span> <span class="s2">"Hello"</span><span class="p">,</span>
-  <span class="s2">"target"</span> <span class="o">:</span> <span class="s2">"World"</span>
-<span class="p">}</span>
-</pre></div>
+<div class="highlight highlight-js"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>greeting<span class="pl-pds">"</span></span> <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Hello<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>target<span class="pl-pds">"</span></span> <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>World<span class="pl-pds">"</span></span>
+}</pre></div>
 
 <p>This template:</p>
 
-<div class="highlight highlight-html"><pre><span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;title&gt;</span>A greeting<span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
-  <span class="nt">&lt;h1&gt;</span>{{greeting}}, {{target}}!<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</pre></div>
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">html</span>&gt;
+&lt;<span class="pl-ent">head</span>&gt;
+  &lt;<span class="pl-ent">meta</span> <span class="pl-e">charset</span>=<span class="pl-s"><span class="pl-pds">"</span>UTF-8<span class="pl-pds">"</span></span>&gt;
+  &lt;<span class="pl-ent">title</span>&gt;A greeting&lt;/<span class="pl-ent">title</span>&gt;
+&lt;/<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">body</span>&gt;
+  &lt;<span class="pl-ent">h1</span>&gt;{{greeting}}, {{target}}!&lt;/<span class="pl-ent">h1</span>&gt;
+&lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;</pre></div>
 
 <p>Will produce this output:</p>
 
-<div class="highlight highlight-html"><pre><span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;title&gt;</span>A greeting<span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
-  <span class="nt">&lt;h1&gt;</span>Hello, World!<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</pre></div>
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">html</span>&gt;
+&lt;<span class="pl-ent">head</span>&gt;
+  &lt;<span class="pl-ent">meta</span> <span class="pl-e">charset</span>=<span class="pl-s"><span class="pl-pds">"</span>UTF-8<span class="pl-pds">"</span></span>&gt;
+  &lt;<span class="pl-ent">title</span>&gt;A greeting&lt;/<span class="pl-ent">title</span>&gt;
+&lt;/<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">body</span>&gt;
+  &lt;<span class="pl-ent">h1</span>&gt;Hello, World!&lt;/<span class="pl-ent">h1</span>&gt;
+&lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;</pre></div>
 
 <h2>
-<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
 
 <p>In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
-
-<h2>
-<a name="release-history" class="anchor" href="#release-history"><span class="octicon octicon-link"></span></a>Release History</h2>
-
-<p><strong>1.3.0</strong></p>
-
-<ul>
-<li>Add ability for users to define their own partial finder functions.</li>
-</ul><p><strong>1.2.3</strong></p>
-
-<ul>
-<li>Accept <code>YAML</code> files with either <code>.yaml</code> or <code>.yml</code> extensions.</li>
-</ul><p><strong>1.2.2</strong></p>
-
-<ul>
-<li>Major code refactor</li>
-<li>Remove <code>lodash</code> dependency</li>
-</ul><p><strong>1.2.1</strong></p>
-
-<ul>
-<li>Code Cleanup</li>
-</ul><p><strong>1.2.0</strong></p>
-
-<ul>
-<li>Allow arbitrary JavaScript objects to be passed as data</li>
-</ul><p><strong>1.1.0</strong></p>
-
-<ul>
-<li>Option for common prefix on partials</li>
-<li>Option to clear mustache cache before running task</li>
-</ul><p><strong>1.0.0</strong></p>
-
-<ul>
-<li>Created website</li>
-<li>API now considered stable</li>
-</ul><p><strong>0.3.0</strong></p>
-
-<ul>
-<li>Unverbosify options</li>
-</ul><p><strong>0.2.1</strong></p>
-
-<ul>
-<li>Bugfix: dependencies</li>
-</ul><p><strong>0.2.0</strong></p>
-
-<ul>
-<li>
-<code>YAML</code> data file support</li>
-</ul><p><strong>0.1.0</strong></p>
-
-<ul>
-<li>Initial Release</li>
-</ul>
         </section>
 
         <aside id="sidebar">
