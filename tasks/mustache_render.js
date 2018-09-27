@@ -24,7 +24,8 @@ module.exports = function gruntTask(grunt) {
     prefix_file : "",
     glob: "",
     clear_cache : false,
-    escape: true
+    escape: true,
+    tags: ['{{', '}}']
   };
 
   /**
@@ -64,8 +65,10 @@ module.exports = function gruntTask(grunt) {
         var dataObj = results[0], body = results[1];
 
         grunt.log.writeln("Output " + dest + ":");
-        grunt.file.write(dest, mustache.render(body, dataObj,
-                                               this._getPartial.bind(this)));
+        grunt.file.write(dest, mustache.render(body, 
+                                               dataObj,
+                                               this._getPartial.bind(this),
+                                               this.options.tags));
         grunt.log.ok(
           (
             typeof dataObj === 'object' ?
@@ -313,7 +316,10 @@ module.exports = function gruntTask(grunt) {
 
   grunt.registerMultiTask('mustache_render', 'Render mustache templates',
     function registerTask() {
-      var options = this.options();
+      var options = this.options(DEFAULT_OPTIONS);
+      if (!Array.isArray(options.tags) || options.tags.length !== 2) {
+        throw new Error("Encountered incorrect tags definition");
+      }
       var files = this.files.map(function expandFiles(fileData) {
         var dest = fileData.dest;
         if (typeof dest !== 'string' || dest === '') {

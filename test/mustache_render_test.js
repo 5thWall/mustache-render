@@ -29,6 +29,16 @@ exports.mustache_render = {
     done();
   },
 
+  tags: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/tags.html');
+    var expected = grunt.file.read('test/expected/tags.html');
+    test.equal(actual, expected, 'should render even with different tags set.');
+
+    test.done();
+  },
+
   json_data: function(test) {
     test.expect(1);
 

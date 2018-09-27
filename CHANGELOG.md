@@ -1,4 +1,8 @@
 # Changelog
+__2.0.0__
+
+ * Add support for specifying different tags to mustache
+ * update dependency version (mustache)
 
 __1.9.0__
 
