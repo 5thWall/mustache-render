@@ -31,6 +31,16 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     mustache_render: {
+      tags: {
+        options: {
+          tags: ['<%', '%>']
+        },
+        files: [
+          {data: 'test/fixtures/objects/hello_world.json',
+           template: 'test/fixtures/templates/tags.html.mustache',
+           dest: 'tmp/tags.html'}
+        ]
+      },
       json_data: {
         files: [
           {data: 'test/fixtures/objects/hello_world.json',

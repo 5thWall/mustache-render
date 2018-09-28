@@ -39,7 +39,7 @@
   "dependencies": {
     "es6-promise": "^2.0.0",
     "js-yaml": "^3.2.2",
-    "mustache": "^1.0.0",
+    "mustache": "git://github.com/stackchain/mustache.js",
     "request": "^2.45.0"
   },
   "keywords": [
